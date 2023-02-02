@@ -1,47 +1,49 @@
 ListProcess:
   type: array
   items:
-    type: Object
+    type: object
+    title: Process
     properties:
       id:
         type: integer
         format: int64
-        min: 1
-        required: true
+        minimum: 1
       name:
         type: string
-        required: true
       nbInstance:
-        type: number
-        min: 1
-        required: true
+        type: integer
+        minimum: 1
       startAtLaunch:
         type: boolean
-        required: true
       restartType:
         $ref: "./RestartType.yaml#/RestartType"
-        required: true
       expectedExitCode:
-        type: number
-        required: true
+        type: integer
       startupTime:
-        type: number
-        required: true
+        type: integer
       restartRetryCount:
-        type: number
-        required: true
+        type: integer
       exitSignal:
         $ref: "./ExitSignalType.yaml#/ExitSignalType"
-        required: true
       gracefulStopTime:
-        type: number
-        required: true
+        type: integer
       environement:
         $ref: "./Environement.yaml#/Environement"
-        required: true
       umask:
         type: string
-        required: true
       etat:
         $ref: "./ProcessEtat.yaml#/ProcessEtat"
-        required: true
+    required:
+      - id
+      - name
+      - nbInstance
+      - startAtLaunch
+      - restartType
+      - expectedExitCode
+      - startupTime
+      - restartRetryCount
+      - exitSignal
+      - gracefulStopTime
+      - environement
+      - umask
+      - etat

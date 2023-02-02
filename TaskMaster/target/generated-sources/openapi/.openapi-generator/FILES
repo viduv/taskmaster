@@ -1,7 +1,0 @@
-src/main/java/fr/fpage/backend/openapi/api/ApiUtil.java
-src/main/java/fr/fpage/backend/openapi/api/TaskmasterApi.java
-src/main/java/fr/fpage/backend/openapi/api/TaskmasterApiController.java
-src/main/java/fr/fpage/backend/openapi/api/TaskmasterApiDelegate.java
-src/main/java/fr/fpage/backend/openapi/model/ExitSignalType.java
-src/main/java/fr/fpage/backend/openapi/model/ProcessEtat.java
-src/main/java/fr/fpage/backend/openapi/model/RestartType.java
