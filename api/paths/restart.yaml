@@ -1,0 +1,17 @@
+post:
+  tags:
+    - taskmaster
+  operationId: restart
+  summary: Redemarre un process
+  parameters:
+    - in: query
+      name: id
+      required: true
+      schema:
+        type: integer
+        min: 1
+  responses:
+    '200':
+      description: 'OK'
+    '400':
+      description: "Le process n'est pas demarré"

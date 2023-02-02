@@ -1,0 +1,3 @@
+RestartType:
+  type: string
+  enum: [ALWAYS, NEVER, ON_FAILURE]

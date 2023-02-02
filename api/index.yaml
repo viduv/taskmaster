@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: TaskMaster api
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+paths:
+  /start:
+    summary: "Demarre un process"
+    $ref: "./paths/start.yaml"
+  /stop:
+    summary: "Arrete un process"
+    $ref: "./paths/stop.yaml"
+  /restart:
+    summary: "Redemare un process"
+    $ref: "./paths/restart.yaml"
+  /listProcess:
+    summary: "Retourne la liste des process"
+    $ref: "./paths/listProcess.yaml"
+  /updateConfig:
+    summary: "Met a jour le fichier de configuration"
+    $ref: "./paths/updateConfig.yaml"

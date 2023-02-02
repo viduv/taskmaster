@@ -1,0 +1,3 @@
+ProcessEtat:
+  type: string
+  enum: [RUN, STOP]

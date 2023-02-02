@@ -1,0 +1,3 @@
+ExitSignalType:
+  type: string
+  enum: [SIGINT]

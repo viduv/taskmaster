@@ -1,0 +1,12 @@
+get:
+  tags:
+    - taskmaster
+  operationId: listProcess
+  summary: Renvois la liste des process
+  responses:
+    '200':
+      description: 'Tableau des process'
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/ListProcess.yaml#/ListProcess"
