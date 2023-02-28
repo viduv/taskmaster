@@ -8,7 +8,8 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
-model/environementInner.ts
+model/childsProcess.ts
+model/envValue.ts
 model/exitSignalType.ts
 model/models.ts
 model/process.ts

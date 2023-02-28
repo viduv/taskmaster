@@ -9,13 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { ProcessEtat } from './processEtat';
 
 
-export type ProcessEtat = 'RUN' | 'PARTIAL' | 'STOP';
+export interface ChildsProcess { 
+    pid: number;
+    etat: ProcessEtat;
+}
+export namespace ChildsProcess {
+}
 
-export const ProcessEtat = {
-    Run: 'RUN' as ProcessEtat,
-    Partial: 'PARTIAL' as ProcessEtat,
-    Stop: 'STOP' as ProcessEtat
-};
 

@@ -11,11 +11,8 @@
  */
 
 
-export type ProcessEtat = 'RUN' | 'PARTIAL' | 'STOP';
-
-export const ProcessEtat = {
-    Run: 'RUN' as ProcessEtat,
-    Partial: 'PARTIAL' as ProcessEtat,
-    Stop: 'STOP' as ProcessEtat
-};
+export interface EnvValue { 
+    key: string;
+    value: string;
+}
 

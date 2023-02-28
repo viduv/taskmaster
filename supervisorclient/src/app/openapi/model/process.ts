@@ -9,16 +9,17 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { EnvValue } from './envValue';
 import { ProcessEtat } from './processEtat';
 import { ExitSignalType } from './exitSignalType';
-import { EnvironementInner } from './environementInner';
 import { RestartType } from './restartType';
+import { ChildsProcess } from './childsProcess';
 
 
 export interface Process { 
-    id: number;
     name: string;
     nbInstance: number;
+    childs?: Array<ChildsProcess>;
     startAtLaunch: boolean;
     restartType: RestartType;
     expectedExitCode: number;
@@ -26,7 +27,7 @@ export interface Process {
     restartRetryCount: number;
     exitSignal: ExitSignalType;
     gracefulStopTime: number;
-    environement: Array<EnvironementInner>;
+    environement: Array<EnvValue>;
     umask: string;
     etat: ProcessEtat;
 }
