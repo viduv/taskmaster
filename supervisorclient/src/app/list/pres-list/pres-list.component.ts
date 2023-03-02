@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Process } from 'src/app/openapi';
+import { GroupProcess, Process } from 'src/app/openapi';
 
 @Component({
   selector: 'app-pres-list',
@@ -7,7 +7,7 @@ import { Process } from 'src/app/openapi';
   styleUrls: ['./pres-list.component.scss']
 })
 export class PresListComponent implements OnInit {
-  @Input() processes : Array<Process> = [];
+  @Input() processes : Array<GroupProcess> = [];
 
   constructor() { }
   
@@ -15,10 +15,10 @@ export class PresListComponent implements OnInit {
       
   }
 
-  editProcess(process: Process) {
+  editProcess(process: GroupProcess) {
     console.log(process);
   }
-  deleteProcess(process: Process) {
+  deleteProcess(process: GroupProcess) {
     console.log(process);
   }
 }

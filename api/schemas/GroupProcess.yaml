@@ -1,27 +1,11 @@
-ListProcess:
-  type: array
-  items:
+GroupProcess:
     type: object
-    title: Process
     properties:
       name:
         type: string
       nbInstance:
         type: integer
         minimum: 1
-      childs:
-        type: array
-        items:
-          type: object
-          title: childsProcess
-          properties:
-            pid: 
-              type: integer
-            etat:
-              $ref: "./ProcessEtat.yaml#/ProcessEtat"
-          required:
-            - pid
-            - etat
       startAtLaunch:
         type: boolean
       restartType:

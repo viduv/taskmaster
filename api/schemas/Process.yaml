@@ -1,0 +1,10 @@
+Process:
+    type: object
+    properties:
+      pid: 
+        type: integer
+      etat:
+        $ref: "./ProcessEtat.yaml#/ProcessEtat"
+    required:
+      - pid
+      - etat

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Process } from 'src/app/openapi';
+import { GroupProcess, Process } from 'src/app/openapi';
 import { SupervisorService } from 'src/app/supervisor.service';
 @Component({
   selector: 'app-smart-list',
@@ -10,7 +10,7 @@ import { SupervisorService } from 'src/app/supervisor.service';
 })
 export class SmartListComponent implements OnInit {
 
-  listProcess: Observable<Array<Process>> = new Observable<Array<Process>>();
+  listProcess: Observable<Array<GroupProcess>> = new Observable<Array<GroupProcess>>();
   constructor(
     private supervisorService: SupervisorService) 
     {}

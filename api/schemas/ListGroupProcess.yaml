@@ -1,0 +1,4 @@
+ListGroupProcess:
+  type: array
+  items:
+    $ref: "./GroupProcess.yaml#/GroupProcess"

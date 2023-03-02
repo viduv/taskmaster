@@ -1,0 +1,20 @@
+get:
+  tags:
+    - taskmaster
+  operationId: groupProcess
+  summary: Renvois un groupe de process
+  responses:
+    '200':
+      description: 'Groupe des process'
+      content:
+        application/json:
+          schema:
+            type: object
+            title: groupProcessDetails
+            properties:
+              groupProcess:
+                $ref: "../schemas/GroupProcess.yaml#/GroupProcess"
+              processes:
+                type: array
+                items:
+                  $ref: "../schemas/Process.yaml#/Process"

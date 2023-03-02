@@ -14,9 +14,12 @@ paths:
   /restart:
     summary: "Redemare un process"
     $ref: "./paths/restart.yaml"
-  /listProcess:
+  /listGroupProcess:
     summary: "Retourne la liste des process"
-    $ref: "./paths/listProcess.yaml"
+    $ref: "./paths/listGroupProcess.yaml"
   /updateConfig:
     summary: "Met a jour le fichier de configuration"
     $ref: "./paths/updateConfig.yaml"
+  /groupProcess:
+    summary: "Renvois un groupe de process"
+    $ref: "./paths/groupProcess.yaml"
