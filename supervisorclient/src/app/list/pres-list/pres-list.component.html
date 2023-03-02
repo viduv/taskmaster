@@ -1,14 +1,14 @@
 <div class="container">
 <div class="card-container" *ngIf="processes.length > 0; else spinner">
   <div class="grid-card" *ngFor="let process of processes">
-<mat-card class="card" [routerLink]="['details']" >
+<mat-card class="card" [routerLink]="['/details']" >
   <mat-card-header>
     <div class="card-header-title">
     <mat-card-title>Processus</mat-card-title>
     <mat-card-subtitle>Détails du processus</mat-card-subtitle>
   </div>
   </mat-card-header>
-  <mat-card-content [routerLink]="['/details']">
+  <mat-card-content>
     <ul>
       <li><strong>Nom :</strong>  {{process.name}} </li>
       <li><strong>Nombre d'instances :</strong>  {{process.nbInstance}} </li>

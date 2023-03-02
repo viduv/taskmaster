@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {TaskmasterServiceInterface} from "./openapi";
 
 @Component({
   selector: 'app-root',
