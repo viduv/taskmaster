@@ -14,4 +14,11 @@ export class PresListComponent implements OnInit {
   ngOnInit(): void {
       
   }
+
+  editProcess(process: Process) {
+    console.log(process);
+  }
+  deleteProcess(process: Process) {
+    console.log(process);
+  }
 }

@@ -12,11 +12,13 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SmartDetailsComponent, PresDetailsComponent } from './details';
 
 // @NgModule decorator with its metadata
 @NgModule({
-  declarations: [AppComponent, SmartListComponent, PresListComponent, SmartEditComponent, PresEditComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, RouterModule, ApiModule, MatCardModule, MatButtonModule, MatToolbarModule, MatIconModule ],
+  declarations: [AppComponent, SmartListComponent, PresListComponent, SmartEditComponent, PresEditComponent, SmartDetailsComponent, PresDetailsComponent],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, RouterModule, ApiModule, MatCardModule, MatButtonModule, MatToolbarModule, MatIconModule, MatProgressSpinnerModule ],
   providers: [],
   bootstrap: [AppComponent]
 })

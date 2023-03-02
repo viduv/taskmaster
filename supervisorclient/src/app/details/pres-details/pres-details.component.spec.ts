@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SmartEditComponent } from './smart-edit.component';
+import { PresDetailsComponent } from './pres-details.component';
 
-describe('SmartEditComponent', () => {
-  let component: SmartEditComponent;
-  let fixture: ComponentFixture<SmartEditComponent>;
+describe('PresDetailsComponent', () => {
+  let component: PresDetailsComponent;
+  let fixture: ComponentFixture<PresDetailsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SmartEditComponent ]
+      declarations: [ PresDetailsComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SmartEditComponent);
+    fixture = TestBed.createComponent(PresDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
