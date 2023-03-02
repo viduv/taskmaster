@@ -3,6 +3,12 @@ get:
     - taskmaster
   operationId: groupProcess
   summary: Renvois un groupe de process
+  parameters:
+    - in: path
+      name: name
+      schema: 
+        type: string
+      required: true
   responses:
     '200':
       description: 'Groupe des process'
