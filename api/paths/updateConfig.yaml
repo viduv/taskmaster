@@ -1,4 +1,4 @@
-post:
+patch:
   tags:
     - taskmaster
   operationId: updateConfig

@@ -1,7 +1,16 @@
 package fr.fpage.taskmaster.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.util.List;
+
+@NoArgsConstructor
+@Getter
+@ToString
 public class Configuration {
 
-    private ProcessConfiguration processConfiguration;
+    private List<ProcessConfiguration> processConfiguration;
 
 }

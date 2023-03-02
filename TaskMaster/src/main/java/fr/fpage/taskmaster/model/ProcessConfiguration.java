@@ -1,9 +1,17 @@
 package fr.fpage.taskmaster.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.util.HashMap;
 
+@Getter
+@NoArgsConstructor
+@ToString
 public class ProcessConfiguration {
 
+    private String name;
     private String cmd;
     private int nbInstance;
     private boolean startAtLaunch;
@@ -17,4 +25,6 @@ public class ProcessConfiguration {
     private HashMap<String, String> env;
     private String folder;
     private String umask;
+
+
 }

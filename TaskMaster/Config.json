@@ -1,0 +1,17 @@
+{
+  "processConfiguration": [
+    {
+      "name": "ls",
+      "cmd": "yes",
+      "expectedExitCode": 130,
+      "exitSignal": "SIGINT"
+    },
+    {
+      "name": "yes",
+      "cmd": "yes",
+      "expectedExitCode": 130,
+      "exitSignal": "SIGINT",
+      "nbInstance": 3
+    }
+  ]
+}
