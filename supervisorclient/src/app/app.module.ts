@@ -14,11 +14,19 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { SmartDetailsComponent, PresDetailsComponent } from './details';
+import {MatTableModule} from '@angular/material/table';
+import {MatRadioModule} from '@angular/material/radio';
+
 
 // @NgModule decorator with its metadata
 @NgModule({
   declarations: [AppComponent, SmartListComponent, PresListComponent, SmartEditComponent, PresEditComponent, SmartDetailsComponent, PresDetailsComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, RouterModule, ApiModule, MatCardModule, MatButtonModule, MatToolbarModule, MatIconModule, MatProgressSpinnerModule ],
+  imports: [BrowserModule, AppRoutingModule, 
+    HttpClientModule, RouterModule, 
+    ApiModule, MatCardModule, 
+    MatButtonModule, MatToolbarModule, 
+    MatIconModule, MatProgressSpinnerModule, 
+    MatTableModule, MatRadioModule ],
   providers: [],
   bootstrap: [AppComponent]
 })
