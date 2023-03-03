@@ -8,6 +8,8 @@ import { SupervisorService } from 'src/app/supervisor.service';
   template: `<app-pres-details
   style="height: calc(100% - 64px); display: block;"
   [groupProcess]="(groupProcess | async) ?? {}"
+  (startProc)="startProc($event)"
+  (stopProc)="stopProc($event)"
   ></app-pres-details>`,
 })
 export class SmartDetailsComponent implements OnInit {
@@ -19,6 +21,14 @@ export class SmartDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.groupProcess = this.supervisorService.groupProcess();
+  }
+
+  startProc(groupProcess : GroupProcessDetails){
+
+  }
+  
+  stopProc(groupProcess: GroupProcessDetails){
+    
   }
 
 }

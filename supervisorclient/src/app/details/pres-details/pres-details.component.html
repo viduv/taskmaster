@@ -27,10 +27,10 @@
       </table>
     </div>
     <div class="process-button">
-      <button mat-raised-button color="accent" aria-label="List processes" *ngIf="groupProcess?.groupProcess?.etat !== 'RUN'">
+      <button mat-raised-button color="accent" aria-label="start processes" (click)="startProcess()" *ngIf="groupProcess?.groupProcess?.etat !== 'RUN'">
         Start Process
       </button>
-      <button mat-raised-button color="accent" aria-label="List processes" *ngIf="groupProcess?.groupProcess?.etat === 'RUN'">
+      <button mat-raised-button color="accent" aria-label="stop processes" (click)="stopProcess()" *ngIf="groupProcess?.groupProcess?.etat === 'RUN'">
           Stop Process
         </button>
     </div>
