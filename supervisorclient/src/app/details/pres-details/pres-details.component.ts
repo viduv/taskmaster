@@ -19,4 +19,7 @@ export class PresDetailsComponent implements OnInit {
   getRadioColor(etat: string): ThemePalette {
     return etat === 'RUN' ? 'primary' : etat === 'PARTIAL' ? 'accent' : etat === 'STOP' ? 'warn' : 'primary'
   }
+  getTooltip(etat: string): string {
+    return etat === 'RUN' ? 'running' : etat === 'PARTIAL' ? 'partial' : etat === 'STOP' ? 'stop' : ''
+  }
 }

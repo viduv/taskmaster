@@ -6,6 +6,7 @@ import { SupervisorService } from 'src/app/supervisor.service';
 @Component({
   selector: 'app-smart-details',
   template: `<app-pres-details
+  style="height: calc(100% - 64px); display: block;"
   [groupProcess]="(groupProcess | async) ?? {}"
   ></app-pres-details>`,
 })

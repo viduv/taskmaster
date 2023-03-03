@@ -1,12 +1,49 @@
 .details-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 100%;
     height: 100%;
-    justify-content: center;
-    align-items: center;
+    padding: 10px;
+    gap: 10px;
 }
 
 mat-radio-button{
     pointer-events: none;
+    
+}
+
+.process-table {
+    width: 100%;
+}
+
+.left-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 30%;
+    align-items: center;
+}
+
+// for table to be align to center
+td, th {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.mat-sort-header-container {
+    justify-content: center !important;
+}
+
+.right-container {
+    overflow: auto;
+    height: 100%;
+}
+.right-card {
+    background-color: #1E1E1E; /* couleur de fond */
+    color: #CCCCCC; /* couleur du texte */
+    font-family: "Courier New", Courier, monospace; /* police de caractères */
+    font-size: 14px; /* taille de la police */
+    line-height: 1.4; /* hauteur de ligne */
+    padding: 10px; /* rembourrage */
+    white-space: pre-line;
 }

@@ -10,16 +10,16 @@
   </mat-card-header>
   <mat-card-content>
     <ul>
-      <li><strong>Nom :</strong>  {{process.name}} </li>
-      <li><strong>Nombre d'instances :</strong>  {{process.nbInstance}} </li>
-      <li><strong>Démarrer au lancement :</strong>  {{process.startAtLaunch ? 'Oui' : 'Non'}}</li>
-      <li><strong>Type de redémarrage :</strong>  {{process.restartType}}</li>
-      <li><strong>Code de sortie attendu :</strong>  {{process.expectedExitCode}}</li>
-      <li><strong>Temps de démarrage :</strong>  {{process.startupTime}} ms</li>
-      <li><strong>Nombre de tentatives de redémarrage :</strong>  {{process.restartRetryCount}}</li>
-      <li><strong>Signal de sortie :</strong>  {{process.exitSignal }}</li>
-      <li><strong>Temps d'arrêt en douceur :</strong>  {{process.gracefulStopTime}} ms</li>
-      <li><strong>Environnement :</strong> {{process.environement}}</li>
+      <li>Nom :  {{process.name}} </li>
+      <li>Nombre d'instances :  {{process.nbInstance}} </li>
+      <li>Démarrer au lancement :  {{process.startAtLaunch ? 'Oui' : 'Non'}}</li>
+      <li>Type de redémarrage :  {{process.restartType}}</li>
+      <li>Code de sortie attendu :  {{process.expectedExitCode}}</li>
+      <li>Temps de démarrage :  {{process.startupTime}} ms</li>
+      <li>Nombre de tentatives de redémarrage :  {{process.restartRetryCount}}</li>
+      <li>Signal de sortie :  {{process.exitSignal }}</li>
+      <li>Temps d'arrêt en douceur :  {{process.gracefulStopTime}} ms</li>
+      <li>Environnement : {{process.environement}}</li>
     </ul>
   </mat-card-content>
   <mat-card-footer>

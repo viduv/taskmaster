@@ -7,6 +7,8 @@ import { SupervisorService } from 'src/app/supervisor.service';
   template: `<app-pres-list
   [processes]="(listProcess | async) ?? []"
   ></app-pres-list>`,
+  styles: ['app-pres-list { height: calc(100% - 64px); display: block;}']
+
 })
 export class SmartListComponent implements OnInit {
 

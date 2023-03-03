@@ -16,6 +16,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { SmartDetailsComponent, PresDetailsComponent } from './details';
 import {MatTableModule} from '@angular/material/table';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatListModule} from '@angular/material/list';
 
 
 // @NgModule decorator with its metadata
@@ -26,7 +28,7 @@ import {MatRadioModule} from '@angular/material/radio';
     ApiModule, MatCardModule, 
     MatButtonModule, MatToolbarModule, 
     MatIconModule, MatProgressSpinnerModule, 
-    MatTableModule, MatRadioModule ],
+    MatTableModule, MatRadioModule, MatTooltipModule, MatListModule ],
   providers: [],
   bootstrap: [AppComponent]
 })
