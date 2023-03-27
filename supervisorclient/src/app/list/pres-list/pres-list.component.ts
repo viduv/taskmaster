@@ -12,7 +12,7 @@ export class PresListComponent implements OnInit {
   constructor() { }
   
   ngOnInit(): void {
-      
+      console.log(this.processes)
   }
 
   editProcess(process: GroupProcess) {

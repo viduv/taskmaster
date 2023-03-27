@@ -5,7 +5,7 @@ import { SupervisorService } from 'src/app/supervisor.service';
 @Component({
   selector: 'app-smart-list',
   template: `<app-pres-list
-  [processes]="(listProcess | async) ?? []"
+  [processes]="(supervisorService.getListProcessSubject() | async) ?? []"
   ></app-pres-list>`,
   styles: ['app-pres-list { height: calc(100% - 64px); display: block;}']
 
@@ -14,9 +14,9 @@ export class SmartListComponent implements OnInit {
 
   listProcess: Observable<Array<GroupProcess>> = new Observable<Array<GroupProcess>>();
   constructor(
-    private supervisorService: SupervisorService) 
+    public supervisorService: SupervisorService) 
     {}
   ngOnInit(): void {
-    this.listProcess = this.supervisorService.listProcess();
+    this.supervisorService.listProcess();
   }
 }

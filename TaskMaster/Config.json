@@ -5,7 +5,9 @@
       "cmd": "ls",
       "expectedExitCode": 130,
       "exitSignal": "SIGINT",
-      "nbInstance": 1
+      "nbInstance": 1,
+      "stdoutFile": "/tmp/yes.log",
+      "stderrFile": "/tmp/yesErr.log"
     },
     {
       "name": "yes",

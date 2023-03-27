@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component , OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { GroupProcessDetails } from 'src/app/openapi';
 import { SupervisorService } from 'src/app/supervisor.service';
 import {ActivatedRoute} from "@angular/router";
@@ -8,23 +8,24 @@ import {ActivatedRoute} from "@angular/router";
   selector: 'app-smart-details',
   template: `<app-pres-details
   style="height: calc(100% - 64px); display: block;"
-  [groupProcess]="(groupProcess | async) ?? {}"
+  [groupProcess]="(supervisorService.getGroupProcessSubject() | async) ?? {}"
   (startProc)="startProc($event)"
   (stopProc)="stopProc($event)"
   ></app-pres-details>`,
 })
-export class SmartDetailsComponent implements OnInit {
+export class SmartDetailsComponent implements OnInit, OnDestroy {
 
   groupProcess: Observable<GroupProcessDetails> = new Observable<GroupProcessDetails>();
+  routerSubscription: Subscription | undefined = undefined;
 
   constructor(
-    private supervisorService: SupervisorService,
+    public supervisorService: SupervisorService,
     private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
-      this.groupProcess = this.supervisorService.groupProcess(params["id"]);
+    this.routerSubscription = this.activatedRoute.params.subscribe(params => {
+      this.supervisorService.groupProcess(params["id"]);
     })
   }
 
@@ -35,5 +36,8 @@ export class SmartDetailsComponent implements OnInit {
   stopProc(groupProcess: GroupProcessDetails){
 
   }
-
+  
+  ngOnDestroy(): void {
+      this.routerSubscription?.unsubscribe()
+  }
 }

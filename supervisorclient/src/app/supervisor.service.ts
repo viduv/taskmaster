@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable, of, ReplaySubject} from 'rxjs';
 import {
   ExitSignalType,
   GroupProcess,
@@ -14,14 +14,28 @@ import {
 })
 export class SupervisorService {
 
+  groupProcessSubject : ReplaySubject<GroupProcessDetails> = new ReplaySubject<GroupProcessDetails>
+  listProcessSubject : ReplaySubject<Array<GroupProcess>> = new ReplaySubject<Array<GroupProcess>>
+
+
   constructor(private taskmasterService: TaskmasterService) {
   }
 
-  groupProcess(processName: string): Observable<GroupProcessDetails> {
-    return this.taskmasterService.groupProcess(processName);
+  getGroupProcessSubject(): ReplaySubject<GroupProcessDetails> {
+    return this.groupProcessSubject;
   }
 
-  listProcess(): Observable<Array<GroupProcess>> {
-    return this.taskmasterService.listGroupProcess();
+  getListProcessSubject(): ReplaySubject<Array<GroupProcess>> {
+    return this.listProcessSubject;
+  }
+
+  groupProcess(processName: string): void {
+    this.taskmasterService.groupProcess(processName).subscribe(value => this.groupProcessSubject.next(value))
+  }
+
+  listProcess(): void {
+    this.taskmasterService.listGroupProcess().subscribe(value => {
+      this.listProcessSubject.next(value)
+    });
   }
 }
