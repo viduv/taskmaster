@@ -6,6 +6,7 @@ import fr.fpage.taskmaster.model.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,7 +25,13 @@ public class ProcessService {
     }
 
     public void loadProcess(Configuration configuration) {
-        configuration.getProcessConfiguration().stream().map(conf -> new GroupProcess(conf, this.jnaService)).toList().forEach(process -> {
+        configuration.getProcessConfiguration().stream().map(conf -> {
+            try {
+                return new GroupProcess(conf, this.jnaService);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).toList().forEach(process -> {
             this.processMap.put(process.getConfiguration().getName(), process);
             process.start();
         });

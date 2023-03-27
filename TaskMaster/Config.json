@@ -2,16 +2,19 @@
   "processConfiguration": [
     {
       "name": "ls",
-      "cmd": "yes",
+      "cmd": "ls",
       "expectedExitCode": 130,
-      "exitSignal": "SIGINT"
+      "exitSignal": "SIGINT",
+      "nbInstance": 1
     },
     {
       "name": "yes",
       "cmd": "yes",
       "expectedExitCode": 130,
       "exitSignal": "SIGINT",
-      "nbInstance": 400
+      "nbInstance": 3,
+      "stdoutFile": "/tmp/yes.log",
+      "stderrFile": "/tmp/yesErr.log"
     }
   ]
 }

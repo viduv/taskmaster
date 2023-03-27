@@ -21,10 +21,10 @@ public class ProcessConfiguration {
     private int restartRetryCount;
     private ExitSignalType exitSignal;
     private int gracefulStopTime;
-    private LogType log;
     private HashMap<String, String> env = new HashMap<>();
     private String folder;
     private String umask;
-
+    private String stdoutFile;
+    private String stderrFile;
 
 }

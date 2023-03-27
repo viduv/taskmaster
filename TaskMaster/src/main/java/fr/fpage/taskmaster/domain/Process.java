@@ -5,9 +5,7 @@ import fr.fpage.taskmaster.application.services.JNAService;
 import fr.fpage.taskmaster.model.ProcessConfiguration;
 import lombok.Getter;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +30,7 @@ public class Process {
 
         this.processThread = new Thread(() -> {
             this.etat = ProcessEtat.RUN;
-            while (this.runProcess());
+            while (this.runProcess()) ;
             this.etat = ProcessEtat.STOP;
         });
         this.processThread.start();
@@ -48,24 +46,38 @@ public class Process {
         }
         this.outputThread = new Thread(() -> {
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
             try {
+                OutputStream stdoutStream = null;
+                if (this.configuration.getStdoutFile() != null)
+                    stdoutStream = new FileOutputStream(this.configuration.getStdoutFile(), true);
+                String line;
                 while ((line = reader.readLine()) != null) {
-            //        Logger.getGlobal().log(Level.INFO, line);
+                    if (configuration.getStdoutFile() != null)
+                        stdoutStream.write((line + "\n").getBytes());
+                    else
+                        Logger.getLogger(configuration.getName()).info(line);
                     Thread.sleep(10);
                 }
-            } catch (IOException | InterruptedException ignored) {
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
             }
         });
         this.errorThread = new Thread(() -> {
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-            String line;
             try {
+                OutputStream stderrStream = null;
+                if (configuration.getStderrFile() != null)
+                    stderrStream = new FileOutputStream(this.configuration.getStderrFile(), true);
+                String line;
                 while ((line = reader.readLine()) != null) {
-             //       Logger.getGlobal().log(Level.INFO, line);
+                    if (stderrStream != null)
+                        stderrStream.write(line.getBytes());
+                    else
+                        Logger.getLogger(configuration.getName()).warning(line);
                     Thread.sleep(10);
                 }
-            } catch (IOException | InterruptedException ignored) {
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
             }
         });
         this.outputThread.start();

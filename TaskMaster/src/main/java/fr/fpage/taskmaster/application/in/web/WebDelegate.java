@@ -30,44 +30,6 @@ public class WebDelegate implements TaskmasterApi {
         return ResponseEntity.ok(this.processService.listProcess().stream().map(ProcessMapper.INSTANCE::domainToApi).toList());
     }
 
-    /**
-     * POST /restart : Redémarre un process
-     *
-     * @param id (required)
-     * @return OK (status code 200)
-     * or Le process n&#39;est pas démarré (status code 400)
-     * @see TaskmasterApi#restart
-     */
-    @Override
-    public ResponseEntity<Void> restart(Integer id) {
-        return TaskmasterApi.super.restart(id);
-    }
-
-    /**
-     * POST /start : Démarre un process
-     *
-     * @param id (required)
-     * @return OK (status code 200)
-     * or Le process est deja démarré (status code 400)
-     * @see TaskmasterApi#start
-     */
-    @Override
-    public ResponseEntity<Void> start(Integer id) {
-        return TaskmasterApi.super.start(id);
-    }
-
-    /**
-     * POST /stop : Stop un process
-     *
-     * @param id (required)
-     * @return OK (status code 200)
-     * or Le process n&#39;est pas démarré (status code 400)
-     * @see TaskmasterApi#stop
-     */
-    @Override
-    public ResponseEntity<Void> stop(Integer id) {
-        return TaskmasterApi.super.stop(id);
-    }
 
     /**
      * POST /updateConfig : Met a jour le fichier de configuration
@@ -90,5 +52,53 @@ public class WebDelegate implements TaskmasterApi {
     @Override
     public ResponseEntity<GroupProcessDetails> groupProcess(String name) {
         return ResponseEntity.ok(ProcessMapper.INSTANCE.domainToApiDetail(this.processService.getProcessGroup(name)));
+    }
+
+    /**
+     * GET /processLog : get les log d&#39;un process
+     *
+     * @param name (required)
+     * @return OK (status code 200)
+     * or le process n&#39;existe pas (status code 404)
+     */
+    @Override
+    public ResponseEntity<String> processLog(String name) {
+        return TaskmasterApi.super.processLog(name);
+    }
+
+    /**
+     * POST /restart : Redemarre un process
+     *
+     * @param name (required)
+     * @return OK (status code 200)
+     * or Le process n&#39;est pas demarré (status code 400)
+     */
+    @Override
+    public ResponseEntity<Void> restart(String name) {
+        return TaskmasterApi.super.restart(name);
+    }
+
+    /**
+     * POST /start : Demarre un process
+     *
+     * @param name (required)
+     * @return OK (status code 200)
+     * or Le process est deja démarré (status code 400)
+     */
+    @Override
+    public ResponseEntity<Void> start(String name) {
+        return TaskmasterApi.super.start(name);
+    }
+
+    /**
+     * POST /stop : Arette un process
+     *
+     * @param name (required)
+     * @return OK (status code 200)
+     * or Le process n&#39;est pas demarré (status code 400)
+     */
+    @Override
+    public ResponseEntity<Void> stop(String name) {
+        return TaskmasterApi.super.stop(name);
     }
 }
