@@ -11,7 +11,7 @@
       "cmd": "yes",
       "expectedExitCode": 130,
       "exitSignal": "SIGINT",
-      "nbInstance": 3
+      "nbInstance": 400
     }
   ]
 }

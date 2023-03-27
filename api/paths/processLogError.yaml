@@ -1,8 +1,8 @@
 get:
   tags:
     - taskmaster
-  operationId: processLog
-  summary: get les log d'un process
+  operationId: processLogError
+  summary: get les log d'Error d'un process
   parameters:
     - in: query
       name: name
@@ -15,7 +15,7 @@ get:
       content:
         application/json:
           schema:
-            name: logsContent
+            name: logsErrorContent
             type: string
     '404':
       description: "le log du process n'existe pas"

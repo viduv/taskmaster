@@ -14,6 +14,8 @@ mat-radio-button{
 
 .process-table {
     width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .left-container {

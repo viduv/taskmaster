@@ -26,3 +26,7 @@ paths:
   /processLog:
     summary: "Renvoi les logs d'un groupe de process"
     $ref: "./paths/processLog.yaml"
+  /processLogError:
+    summary: "Renvoi les logs d'Error d'un groupe de process"
+    $ref: "./paths/processLogError.yaml"
+
