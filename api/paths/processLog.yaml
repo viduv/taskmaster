@@ -1,0 +1,21 @@
+get:
+  tags:
+    - taskmaster
+  operationId: processLog
+  summary: get les log d'un process
+  parameters:
+    - in: query
+      name: name
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 'OK'
+      content:
+        application/json:
+          schema:
+            name: logsContent
+            type: string
+    '404':
+      description: "le process n'existe pas"

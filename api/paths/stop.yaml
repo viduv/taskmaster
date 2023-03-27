@@ -5,11 +5,10 @@ post:
   summary: Arette un process
   parameters:
     - in: query
-      name: id
+      name: name
       required: true
       schema:
-        type: integer
-        min: 1
+        type: string
   responses:
     '200':
       description: 'OK'

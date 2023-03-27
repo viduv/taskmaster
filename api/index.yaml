@@ -23,3 +23,6 @@ paths:
   /groupProcess:
     summary: "Renvois un groupe de process"
     $ref: "./paths/groupProcess.yaml"
+  /processLog:
+    summary: "Renvoi les logs d'un groupe de process"
+    $ref: "./paths/processLog.yaml"
