@@ -10,7 +10,7 @@ import java.util.List;
 
 public class GroupProcess {
 
-    private final List<Process> processes = new ArrayList<>();
+    @Getter private final List<Process> processes = new ArrayList<>();
 
     @Getter
     private final ProcessConfiguration configuration;

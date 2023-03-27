@@ -4,9 +4,9 @@ get:
   operationId: groupProcess
   summary: Renvois un groupe de process
   parameters:
-    - in: path
+    - in: query
       name: name
-      schema: 
+      schema:
         type: string
       required: true
   responses:

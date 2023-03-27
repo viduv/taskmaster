@@ -1,7 +1,7 @@
 <div class="container">
 <div class="card-container" *ngIf="processes.length > 0; else spinner">
   <div class="grid-card" *ngFor="let process of processes">
-<mat-card class="card" [routerLink]="['/details']" >
+<mat-card class="card" [routerLink]="['/details/' + process.name]" >
   <mat-card-header>
     <div class="card-header-title">
     <mat-card-title>Processus</mat-card-title>
@@ -29,11 +29,11 @@
 </mat-card>
 </div>
 <div class="grid-card">
-<mat-card class="card"> 
+<mat-card class="card">
   <button mat-fab color="accent" aria-label="Example icon button with a home icon">
     <mat-icon>add</mat-icon>
   </button>
-  
+
   </mat-card>
 </div>
 </div>

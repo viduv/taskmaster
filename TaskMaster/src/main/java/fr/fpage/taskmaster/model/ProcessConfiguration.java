@@ -22,7 +22,7 @@ public class ProcessConfiguration {
     private ExitSignalType exitSignal;
     private int gracefulStopTime;
     private LogType log;
-    private HashMap<String, String> env;
+    private HashMap<String, String> env = new HashMap<>();
     private String folder;
     private String umask;
 

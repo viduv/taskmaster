@@ -7,12 +7,12 @@ import { SmartDetailsComponent } from './details';
 const routes: Routes = [
   { path: 'list', component: SmartListComponent},
   { path: 'edit', component: SmartEditComponent},
-  { path: 'details', component: SmartDetailsComponent},
+  { path: 'details/:id', component: SmartDetailsComponent},
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: '**', redirectTo: 'list', pathMatch: 'full' }
 
 ];
-@NgModule({ 
+@NgModule({
   declarations: [],
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

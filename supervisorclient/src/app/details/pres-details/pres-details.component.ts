@@ -8,8 +8,8 @@ import { GroupProcessDetails } from 'src/app/openapi';
   styleUrls: ['./pres-details.component.scss']
 })
 export class PresDetailsComponent implements OnInit {
-  
-  @Input() groupProcess: GroupProcessDetails = {}
+
+  @Input() groupProcess: GroupProcessDetails = {};
   @Output() startProc = new EventEmitter<GroupProcessDetails>;
   @Output() stopProc = new EventEmitter<GroupProcessDetails>;
   displayedColumns: string[] = ['pid', 'etat'];

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GroupProcessDetails } from 'src/app/openapi';
 import { SupervisorService } from 'src/app/supervisor.service';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-smart-details',
@@ -15,20 +16,24 @@ import { SupervisorService } from 'src/app/supervisor.service';
 export class SmartDetailsComponent implements OnInit {
 
   groupProcess: Observable<GroupProcessDetails> = new Observable<GroupProcessDetails>();
+
   constructor(
-    private supervisorService: SupervisorService
+    private supervisorService: SupervisorService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.groupProcess = this.supervisorService.groupProcess();
+    this.activatedRoute.params.subscribe(params => {
+      this.groupProcess = this.supervisorService.groupProcess(params["id"]);
+    })
   }
 
   startProc(groupProcess : GroupProcessDetails){
 
   }
-  
+
   stopProc(groupProcess: GroupProcessDetails){
-    
+
   }
 
 }

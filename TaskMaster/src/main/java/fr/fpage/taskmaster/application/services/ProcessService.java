@@ -1,21 +1,23 @@
 package fr.fpage.taskmaster.application.services;
 
+import fr.fpage.backend.openapi.model.GroupProcessDetails;
 import fr.fpage.taskmaster.domain.GroupProcess;
-import fr.fpage.taskmaster.domain.Process;
 import fr.fpage.taskmaster.model.Configuration;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProcessService {
 
-    @Autowired
-    private JNAService jnaService;
+    private final JNAService jnaService;
     private final HashMap<String, GroupProcess> processMap = new HashMap<>();
+
+    public ProcessService(JNAService jnaService) {
+        this.jnaService = jnaService;
+    }
 
     public List<GroupProcess> listProcess() {
         return this.processMap.values().stream().toList();
@@ -30,5 +32,9 @@ public class ProcessService {
 
     public void stopProcess(String programName) {
         this.processMap.get(programName).stop();
+    }
+
+    public GroupProcess getProcessGroup(String name) {
+        return this.processMap.get(name);
     }
 }

@@ -12,9 +12,12 @@ import java.io.File;
 
 @Component
 public class TaskmasterApplicationRunner implements ApplicationRunner {
-    private static ObjectMapper objectMapper = new ObjectMapper();
-    @Autowired
-    private ProcessService processService;
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private final ProcessService processService;
+
+    public TaskmasterApplicationRunner(ProcessService processService) {
+        this.processService = processService;
+    }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {

@@ -1,48 +1,50 @@
 package fr.fpage.taskmaster.application.in.web;
 
 import fr.fpage.backend.openapi.api.TaskmasterApi;
-import fr.fpage.backend.openapi.api.TaskmasterApiDelegate;
-import fr.fpage.backend.openapi.model.Process;
+import fr.fpage.backend.openapi.model.GroupProcess;
+import fr.fpage.backend.openapi.model.GroupProcessDetails;
 import fr.fpage.taskmaster.application.services.ProcessService;
 import fr.fpage.taskmaster.mapper.ProcessMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
 @Controller
-public class WebDelegate implements TaskmasterApiDelegate {
+public class WebDelegate implements TaskmasterApi {
 
-    @Autowired
-    private ProcessService processService;
+    private final ProcessService processService;
+
+    WebDelegate(ProcessService processService) {
+        this.processService = processService;
+    }
 
     /**
      * GET /listProcess : Renvois la liste des process
      *
      * @return Tableau des process (status code 200)
-     * @see TaskmasterApi#listProcess
+     * @see TaskmasterApi#listGroupProcess
      */
     @Override
-    public ResponseEntity<List<Process>> listProcess() {
+    public ResponseEntity<List<GroupProcess>> listGroupProcess() {
         return ResponseEntity.ok(this.processService.listProcess().stream().map(ProcessMapper.INSTANCE::domainToApi).toList());
     }
 
     /**
-     * POST /restart : Redemarre un process
+     * POST /restart : Redémarre un process
      *
      * @param id (required)
      * @return OK (status code 200)
-     * or Le process n&#39;est pas demarré (status code 400)
+     * or Le process n&#39;est pas démarré (status code 400)
      * @see TaskmasterApi#restart
      */
     @Override
     public ResponseEntity<Void> restart(Integer id) {
-        return TaskmasterApiDelegate.super.restart(id);
+        return TaskmasterApi.super.restart(id);
     }
 
     /**
-     * POST /start : Demarre un process
+     * POST /start : Démarre un process
      *
      * @param id (required)
      * @return OK (status code 200)
@@ -51,20 +53,20 @@ public class WebDelegate implements TaskmasterApiDelegate {
      */
     @Override
     public ResponseEntity<Void> start(Integer id) {
-        return TaskmasterApiDelegate.super.start(id);
+        return TaskmasterApi.super.start(id);
     }
 
     /**
-     * POST /stop : Arette un process
+     * POST /stop : Stop un process
      *
      * @param id (required)
      * @return OK (status code 200)
-     * or Le process n&#39;est pas demarré (status code 400)
+     * or Le process n&#39;est pas démarré (status code 400)
      * @see TaskmasterApi#stop
      */
     @Override
     public ResponseEntity<Void> stop(Integer id) {
-        return TaskmasterApiDelegate.super.stop(id);
+        return TaskmasterApi.super.stop(id);
     }
 
     /**
@@ -76,6 +78,17 @@ public class WebDelegate implements TaskmasterApiDelegate {
      */
     @Override
     public ResponseEntity<Void> updateConfig(String body) {
-        return TaskmasterApiDelegate.super.updateConfig(body);
+        return TaskmasterApi.super.updateConfig(body);
+    }
+
+    /**
+     * GET /groupProcess : Renvois un groupe de process
+     *
+     * @param name (required)
+     * @return Groupe des process (status code 200)
+     */
+    @Override
+    public ResponseEntity<GroupProcessDetails> groupProcess(String name) {
+        return ResponseEntity.ok(ProcessMapper.INSTANCE.domainToApiDetail(this.processService.getProcessGroup(name)));
     }
 }
