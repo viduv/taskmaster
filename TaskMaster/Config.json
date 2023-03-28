@@ -6,8 +6,8 @@
       "expectedExitCode": 0,
       "exitSignal": "SIGINT",
       "nbInstance": 1,
-      "stdoutFile": "/tmp/yes.log",
-      "stderrFile": "/tmp/yesErr.log",
+      "stdoutFile": "/tmp/ls.log",
+      "stderrFile": "/tmp/lsErr.log",
       "startAtLaunch": "true",
       "restartType": "ON_FAILURE"
     },
