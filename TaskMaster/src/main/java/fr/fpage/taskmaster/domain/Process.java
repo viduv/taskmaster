@@ -44,10 +44,12 @@ public class Process {
 
     private boolean runProcess() {
         Logger.getGlobal().log(Level.INFO, "Start process " + this.configuration.getName());
-        ProcessBuilder processBuilder = new ProcessBuilder(this.configuration.getCmd());
+        ProcessBuilder processBuilder = new ProcessBuilder(this.configuration.getCmd().split(" "));
         processBuilder.environment().putAll(this.configuration.getEnv());
         if (this.configuration.getFolder() != null)
             processBuilder.directory(new File(this.configuration.getFolder()));
+        if (this.configuration.getUmask() != null)
+            this.jnaService.setUmask(this.configuration.getUmask());
         try {
             this.process = processBuilder.start();
         } catch (IOException ignored) {

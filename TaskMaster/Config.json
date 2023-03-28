@@ -2,7 +2,7 @@
   "processConfiguration": [
     {
       "name": "ls",
-      "cmd": "ls",
+      "cmd": "ls /",
       "expectedExitCode": 0,
       "exitSignal": "SIGINT",
       "nbInstance": 1,
@@ -32,6 +32,19 @@
       "env": {
         "TEST": "UN TEST"
       }
+    },
+    {
+      "name": "touch",
+      "cmd": "touch /tmp/testUmask",
+      "expectedExitCode": 0,
+      "exitSignal": "SIGINT",
+      "nbInstance": 1,
+      "stdoutFile": "/tmp/touch.log",
+      "stderrFile": "/tmp/touchErr.log",
+      "env": {
+        "TEST": "UN TEST"
+      },
+      "umask": "022"
     }
   ]
 }

@@ -17,7 +17,10 @@ public class JNAService {
     public void kill(java.lang.Process process, ExitSignalType signalType) {
         Logger.getGlobal().log(Level.INFO, "Send " + signalType + " to program " + process.pid());
         Logger.getGlobal().log(Level.INFO, "Result " + this.jnaWrapper.kill((int) process.pid(), signalType.getSig()));
+    }
 
+    public void setUmask(String umask) {
+        this.jnaWrapper.umask(Integer.parseInt(umask));
     }
 
 }
