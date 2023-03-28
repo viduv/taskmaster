@@ -20,6 +20,18 @@
       "stdoutFile": "/tmp/yes.log",
       "stderrFile": "/tmp/yesErr.log",
       "restartType": "ALWAYS"
+    },
+    {
+      "name": "env",
+      "cmd": "env",
+      "expectedExitCode": 0,
+      "exitSignal": "SIGINT",
+      "nbInstance": 1,
+      "stdoutFile": "/tmp/env.log",
+      "stderrFile": "/tmp/envErr.log",
+      "env": {
+        "TEST": "UN TEST"
+      }
     }
   ]
 }

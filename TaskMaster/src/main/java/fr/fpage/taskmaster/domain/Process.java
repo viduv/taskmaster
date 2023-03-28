@@ -45,6 +45,7 @@ public class Process {
     private boolean runProcess() {
         Logger.getGlobal().log(Level.INFO, "Start process " + this.configuration.getName());
         ProcessBuilder processBuilder = new ProcessBuilder(this.configuration.getCmd());
+        processBuilder.environment().putAll(this.configuration.getEnv());
         try {
             this.process = processBuilder.start();
         } catch (IOException ignored) {
