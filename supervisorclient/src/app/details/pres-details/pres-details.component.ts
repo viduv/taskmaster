@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { GroupProcessDetails } from 'src/app/openapi';
@@ -8,7 +8,7 @@ import { GroupProcessDetails } from 'src/app/openapi';
   templateUrl: './pres-details.component.html',
   styleUrls: ['./pres-details.component.scss']
 })
-export class PresDetailsComponent implements OnInit {
+export class PresDetailsComponent implements OnChanges{
 
   @Input() groupProcess: GroupProcessDetails = {};
   @Input() outLogs: string = ""
@@ -24,8 +24,11 @@ export class PresDetailsComponent implements OnInit {
   displayedColumns: string[] = ['pid', 'etat'];
     constructor() { }
 
-  ngOnInit(): void {
-    // this.getOutlog()
+  ngOnChanges(changes: SimpleChanges): void {
+    this.getOutlog()
+    if("groupProcess" in changes && this.groupProcess?.groupProcess?.name){
+      this.getOutlog()
+    }
   }
 
   startProcess(){
