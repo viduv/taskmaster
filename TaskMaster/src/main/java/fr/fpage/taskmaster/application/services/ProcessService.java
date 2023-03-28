@@ -33,15 +33,24 @@ public class ProcessService {
             }
         }).toList().forEach(process -> {
             this.processMap.put(process.getConfiguration().getName(), process);
-            process.start();
+            if (process.getConfiguration().isStartAtLaunch())
+                process.start();
         });
     }
 
-    public void stopProcess(String programName) {
+    public void stopProcess(String programName) throws NullPointerException {
         this.processMap.get(programName).stop();
     }
 
-    public GroupProcess getProcessGroup(String name) {
+    public GroupProcess getProcessGroup(String name) throws NullPointerException {
         return this.processMap.get(name);
+    }
+
+    public String getStdoutLogs(String name) throws NullPointerException {
+        return this.processMap.get(name).getStdoutLogs();
+    }
+
+    public String getStderrLogs(String name) throws NullPointerException {
+        return this.processMap.get(name).getStderrLogs();
     }
 }

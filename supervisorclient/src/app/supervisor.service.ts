@@ -1,21 +1,14 @@
 import {Injectable} from '@angular/core';
-import {Observable, of, ReplaySubject} from 'rxjs';
-import {
-  ExitSignalType,
-  GroupProcess,
-  GroupProcessDetails,
-  ProcessEtat,
-  RestartType,
-  TaskmasterService
-} from './openapi';
+import {ReplaySubject} from 'rxjs';
+import {GroupProcess, GroupProcessDetails, TaskmasterService} from './openapi';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SupervisorService {
 
-  groupProcessSubject : ReplaySubject<GroupProcessDetails> = new ReplaySubject<GroupProcessDetails>
-  listProcessSubject : ReplaySubject<Array<GroupProcess>> = new ReplaySubject<Array<GroupProcess>>
+  groupProcessSubject : ReplaySubject<GroupProcessDetails> = new ReplaySubject<GroupProcessDetails>;
+  listProcessSubject : ReplaySubject<Array<GroupProcess>> = new ReplaySubject<Array<GroupProcess>>;
 
 
   constructor(private taskmasterService: TaskmasterService) {

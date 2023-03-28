@@ -3,6 +3,7 @@ package fr.fpage.taskmaster.domain;
 import fr.fpage.backend.openapi.model.ProcessEtat;
 import fr.fpage.taskmaster.application.services.JNAService;
 import fr.fpage.taskmaster.model.ProcessConfiguration;
+import fr.fpage.taskmaster.model.RestartType;
 import lombok.Getter;
 
 import java.io.*;
@@ -30,7 +31,11 @@ public class Process {
 
         this.processThread = new Thread(() -> {
             this.etat = ProcessEtat.RUN;
-            while (this.runProcess()) ;
+            boolean processError;
+            do {
+                processError = this.runProcess();
+            }
+            while (this.configuration.getRestartType().equals(RestartType.ALWAYS) || this.configuration.getRestartType().equals(RestartType.ON_FAILURE) && processError);
             this.etat = ProcessEtat.STOP;
         });
         this.processThread.start();

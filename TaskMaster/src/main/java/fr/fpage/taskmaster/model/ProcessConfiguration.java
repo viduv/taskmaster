@@ -14,8 +14,8 @@ public class ProcessConfiguration {
     private String name;
     private String cmd;
     private int nbInstance;
-    private boolean startAtLaunch;
-    private RestartType restartType;
+    private boolean startAtLaunch = true;
+    private RestartType restartType = RestartType.NEVER;
     private int expectedExitCode;
     private int startupTime;
     private int restartRetryCount;

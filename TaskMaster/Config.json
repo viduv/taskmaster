@@ -3,11 +3,13 @@
     {
       "name": "ls",
       "cmd": "ls",
-      "expectedExitCode": 130,
+      "expectedExitCode": 0,
       "exitSignal": "SIGINT",
       "nbInstance": 1,
       "stdoutFile": "/tmp/yes.log",
-      "stderrFile": "/tmp/yesErr.log"
+      "stderrFile": "/tmp/yesErr.log",
+      "startAtLaunch": "true",
+      "restartType": "ON_FAILURE"
     },
     {
       "name": "yes",
@@ -16,7 +18,8 @@
       "exitSignal": "SIGINT",
       "nbInstance": 3,
       "stdoutFile": "/tmp/yes.log",
-      "stderrFile": "/tmp/yesErr.log"
+      "stderrFile": "/tmp/yesErr.log",
+      "restartType": "ALWAYS"
     }
   ]
 }

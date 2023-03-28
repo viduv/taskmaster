@@ -51,7 +51,11 @@ public class WebDelegate implements TaskmasterApi {
      */
     @Override
     public ResponseEntity<GroupProcessDetails> groupProcess(String name) {
-        return ResponseEntity.ok(ProcessMapper.INSTANCE.domainToApiDetail(this.processService.getProcessGroup(name)));
+        try {
+            return ResponseEntity.ok(ProcessMapper.INSTANCE.domainToApiDetail(this.processService.getProcessGroup(name)));
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /**
@@ -63,7 +67,27 @@ public class WebDelegate implements TaskmasterApi {
      */
     @Override
     public ResponseEntity<String> processLog(String name) {
-        return TaskmasterApi.super.processLog(name);
+        try {
+            return ResponseEntity.ok(this.processService.getStdoutLogs(name));
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+     * GET /processLogError : get les log d&#39;Error d&#39;un process
+     *
+     * @param name (required)
+     * @return OK (status code 200)
+     * or le log du process n&#39;existe pas (status code 404)
+     */
+    @Override
+    public ResponseEntity<String> processLogError(String name) {
+        try {
+            return ResponseEntity.ok(this.processService.getStderrLogs(name));
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /**
