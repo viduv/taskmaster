@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ReplaySubject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {GroupProcess, GroupProcessDetails, TaskmasterService} from './openapi';
 
 @Injectable({
@@ -9,17 +9,27 @@ export class SupervisorService {
 
   groupProcessSubject : ReplaySubject<GroupProcessDetails> = new ReplaySubject<GroupProcessDetails>;
   listProcessSubject : ReplaySubject<Array<GroupProcess>> = new ReplaySubject<Array<GroupProcess>>;
+  outLogsSubject : ReplaySubject<string> = new ReplaySubject<string>;
+  errorLogsSubject :ReplaySubject<string> = new ReplaySubject<string>;
 
 
   constructor(private taskmasterService: TaskmasterService) {
   }
 
-  getGroupProcessSubject(): ReplaySubject<GroupProcessDetails> {
-    return this.groupProcessSubject;
+  getGroupProcessSubject(): Observable<GroupProcessDetails> {
+    return this.groupProcessSubject.asObservable();
   }
 
-  getListProcessSubject(): ReplaySubject<Array<GroupProcess>> {
-    return this.listProcessSubject;
+  getListProcessSubject(): Observable<Array<GroupProcess>> {
+    return this.listProcessSubject.asObservable();
+  }
+
+  getOutlogsSubject(): Observable<string> {
+    return this.outLogsSubject.asObservable();
+  }
+
+  getErrorLogsSubject(): Observable<string> {
+    return this.errorLogsSubject.asObservable();
   }
 
   groupProcess(processName: string): void {
@@ -31,4 +41,16 @@ export class SupervisorService {
       this.listProcessSubject.next(value)
     });
   }
+
+  errorLogs(processName : string): void {
+    this.taskmasterService.processLogError(processName).subscribe(value => this.errorLogsSubject.next(value))
+  }
+
+  outLogs( processName : string): void {
+    console.log("ASKING API OUT LOGS" , "on" , processName)
+    this.taskmasterService.processLog(processName).subscribe(value => {
+      console.log(value)
+      this.outLogsSubject.next(value)})
+  }
+
 }

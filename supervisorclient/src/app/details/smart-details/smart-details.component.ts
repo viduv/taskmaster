@@ -9,8 +9,12 @@ import {ActivatedRoute} from "@angular/router";
   template: `<app-pres-details
   style="height: calc(100% - 64px); display: block;"
   [groupProcess]="(supervisorService.getGroupProcessSubject() | async) ?? {}"
+  [outLogs]="(supervisorService.getOutlogsSubject() | async) ?? ''"
+  [errorLogs]="(supervisorService.getErrorLogsSubject() | async) ?? ''"
   (startProc)="startProc($event)"
   (stopProc)="stopProc($event)"
+  (getErrorLogs)="getErrorlog($event)"
+  (getOutLogs)="getOulog($event)"
   ></app-pres-details>`,
 })
 export class SmartDetailsComponent implements OnInit, OnDestroy {
@@ -35,6 +39,16 @@ export class SmartDetailsComponent implements OnInit, OnDestroy {
 
   stopProc(groupProcess: GroupProcessDetails){
 
+  }
+
+  getOulog(processName : string){
+    console.log(processName)
+    this.supervisorService.outLogs(processName)
+  }
+
+  getErrorlog(processName: string){
+    console.log(processName)
+    this.supervisorService.errorLogs(processName)
   }
   
   ngOnDestroy(): void {

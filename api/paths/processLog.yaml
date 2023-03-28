@@ -13,7 +13,7 @@ get:
     '200':
       description: 'OK'
       content:
-        application/json:
+        text/plain:
           schema:
             name: logsContent
             type: string

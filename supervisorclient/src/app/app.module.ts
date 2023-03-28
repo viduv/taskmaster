@@ -18,6 +18,9 @@ import {MatTableModule} from '@angular/material/table';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatListModule} from '@angular/material/list';
+import {MatTabsModule} from '@angular/material/tabs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 // @NgModule decorator with its metadata
@@ -28,7 +31,7 @@ import {MatListModule} from '@angular/material/list';
     ApiModule, MatCardModule, 
     MatButtonModule, MatToolbarModule, 
     MatIconModule, MatProgressSpinnerModule, 
-    MatTableModule, MatRadioModule, MatTooltipModule, MatListModule ],
+    MatTableModule, MatRadioModule, MatTooltipModule, MatListModule, MatTableModule, MatTabsModule, BrowserAnimationsModule ],
   providers: [],
   bootstrap: [AppComponent]
 })
