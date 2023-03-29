@@ -42,6 +42,10 @@ public class ProcessService {
         this.processMap.get(programName).stop();
     }
 
+    public void startProcess(String programName) throws NullPointerException {
+        this.processMap.get(programName).start();
+    }
+
     public GroupProcess getProcessGroup(String name) throws NullPointerException {
         return this.processMap.get(name);
     }

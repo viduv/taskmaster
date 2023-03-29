@@ -99,7 +99,13 @@ public class WebDelegate implements TaskmasterApi {
      */
     @Override
     public ResponseEntity<Void> restart(String name) {
-        return TaskmasterApi.super.restart(name);
+        try {
+            this.processService.stopProcess(name);
+            this.processService.startProcess(name);
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
     }
 
     /**
@@ -111,7 +117,12 @@ public class WebDelegate implements TaskmasterApi {
      */
     @Override
     public ResponseEntity<Void> start(String name) {
-        return TaskmasterApi.super.start(name);
+        try {
+            this.processService.startProcess(name);
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
     }
 
     /**
@@ -123,6 +134,11 @@ public class WebDelegate implements TaskmasterApi {
      */
     @Override
     public ResponseEntity<Void> stop(String name) {
-        return TaskmasterApi.super.stop(name);
+        try {
+            this.processService.stopProcess(name);
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
     }
 }

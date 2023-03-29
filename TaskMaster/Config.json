@@ -15,7 +15,7 @@
       "name": "yes",
       "cmd": "yes",
       "expectedExitCode": 130,
-      "exitSignal": "SIGINT",
+      "exitSignal": "SIGTERM",
       "nbInstance": 3,
       "stdoutFile": "/tmp/yes.log",
       "stderrFile": "/tmp/yesErr.log",
@@ -35,7 +35,7 @@
     },
     {
       "name": "touch",
-      "cmd": "touch /tmp/testUmask",
+      "cmd": "touch",
       "expectedExitCode": 0,
       "exitSignal": "SIGINT",
       "nbInstance": 1,

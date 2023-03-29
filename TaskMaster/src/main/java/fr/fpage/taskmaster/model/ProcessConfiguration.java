@@ -20,7 +20,7 @@ public class ProcessConfiguration {
     private int startupTime;
     private int restartRetryCount;
     private ExitSignalType exitSignal;
-    private int gracefulStopTime;
+    private long gracefulStopTime = 5;
     private HashMap<String, String> env = new HashMap<>();
     private String folder;
     private String umask;

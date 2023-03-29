@@ -7,6 +7,7 @@ import fr.fpage.taskmaster.model.RestartType;
 import lombok.Getter;
 
 import java.io.*;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -81,7 +82,7 @@ public class Process {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (stderrStream != null)
-                        stderrStream.write(line.getBytes());
+                        stderrStream.write((line + "\n").getBytes());
                     else
                         Logger.getLogger(configuration.getName()).warning(line);
                     Thread.sleep(10);
@@ -104,7 +105,11 @@ public class Process {
     public void stopProcess() {
         this.jnaService.kill(this.process, this.configuration.getExitSignal());
         try {
-            this.process.waitFor();
+            this.process.waitFor(this.configuration.getGracefulStopTime(), TimeUnit.SECONDS);
+            if (this.process.isAlive()) {
+                Logger.getLogger(this.configuration.getName()).info(String.format("Le programme {%s} ne s'est pas arrette dans le delais accordé. Forcage de l'arret.", this.configuration.getName()));
+                this.process.destroy();
+            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

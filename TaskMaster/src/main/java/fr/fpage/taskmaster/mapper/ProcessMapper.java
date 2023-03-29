@@ -2,8 +2,10 @@ package fr.fpage.taskmaster.mapper;
 
 import fr.fpage.backend.openapi.model.EnvValue;
 import fr.fpage.backend.openapi.model.ExitSignalType;
+import fr.fpage.backend.openapi.model.ProcessEtat;
 import fr.fpage.backend.openapi.model.RestartType;
 import fr.fpage.taskmaster.domain.GroupProcess;
+import fr.fpage.taskmaster.domain.Process;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -18,6 +20,14 @@ public interface ProcessMapper {
     default fr.fpage.backend.openapi.model.GroupProcess domainToApi(GroupProcess domain) {
         List<EnvValue> env = new ArrayList<>();
         domain.getConfiguration().getEnv().forEach((s, s2) -> env.add(new EnvValue().key(s).value(s2)));
+        ProcessEtat etat = null;
+        for (Process process : domain.getProcesses()) {
+            if (etat == null) {
+                etat = process.getEtat();
+            } else if (!etat.equals(process.getEtat())) {
+                etat = ProcessEtat.PARTIAL;
+            }
+        }
         return new fr.fpage.backend.openapi.model.GroupProcess().name(domain.getConfiguration().getName())
                 .nbInstance(domain.getConfiguration().getNbInstance())
                 .startAtLaunch(domain.getConfiguration().isStartAtLaunch())
@@ -28,6 +38,7 @@ public interface ProcessMapper {
                 .exitSignal(this.exitSignalDomainToApi(domain.getConfiguration().getExitSignal()))
                 .gracefulStopTime(domain.getConfiguration().getGracefulStopTime())
                 .environement(env)
+                .etat(etat)
                 .umask(domain.getConfiguration().getUmask());
     }
 
@@ -41,6 +52,7 @@ public interface ProcessMapper {
     }
 
     RestartType restartTypeDomainToApi(fr.fpage.taskmaster.model.RestartType domain);
+
     ExitSignalType exitSignalDomainToApi(fr.fpage.taskmaster.model.ExitSignalType domain);
 
     @Mapping(target = "pid", expression = "java((int)domain.getProcess().pid())")

@@ -20,6 +20,7 @@ GroupProcess:
         $ref: "./ExitSignalType.yaml#/ExitSignalType"
       gracefulStopTime:
         type: integer
+        format: int64
       environement:
         $ref: "./Environement.yaml#/Environement"
       umask:

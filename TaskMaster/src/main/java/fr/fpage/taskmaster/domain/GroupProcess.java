@@ -43,6 +43,7 @@ public class GroupProcess {
 
     public void start() {
         for (int i = 0; i < this.configuration.getNbInstance(); i++) {
+            this.processes.clear();
             this.processes.add(new Process(this.configuration, this.jnaService));
         }
         this.processes.forEach(process -> {
@@ -62,19 +63,14 @@ public class GroupProcess {
         Scanner scanner;
         try {
             scanner = new Scanner(this.stdoutFile);
-            // Création d'un objet StringBuilder pour stocker le contenu du fichier
             StringBuilder stringBuilder = new StringBuilder();
 
-            // Lecture du fichier et stockage du contenu dans la chaîne de caractères
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 stringBuilder.append(line);
+                stringBuilder.append(line).append("\n");
             }
-
-            // Fermeture du scanner
             scanner.close();
-
-            // Récupération de la chaîne de caractères contenant le contenu du fichier
             return stringBuilder.toString();
         } catch (FileNotFoundException e) {
             return "";
@@ -85,19 +81,13 @@ public class GroupProcess {
         Scanner scanner;
         try {
             scanner = new Scanner(this.stderrFile);
-            // Création d'un objet StringBuilder pour stocker le contenu du fichier
             StringBuilder stringBuilder = new StringBuilder();
 
-            // Lecture du fichier et stockage du contenu dans la chaîne de caractères
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                stringBuilder.append(line);
+                stringBuilder.append(line).append("\n");
             }
-
-            // Fermeture du scanner
             scanner.close();
-
-            // Récupération de la chaîne de caractères contenant le contenu du fichier
             return stringBuilder.toString();
         } catch (FileNotFoundException e) {
             return "";
