@@ -54,12 +54,14 @@ export class SupervisorService {
 
   startProcess(name: string | undefined): void {
     if(name !== undefined){
-    this.taskmasterService.start(name)
+      console.log("start")
+    this.taskmasterService.start(name).subscribe(() => this.groupProcess(name))
     }
   }
   stopProcess(name: string | undefined): void {
     if(name !== undefined){
-    this.taskmasterService.stop(name)
+      console.log("stop")
+      this.taskmasterService.stop(name).subscribe(() => this.groupProcess(name))
     }
   }
 }
