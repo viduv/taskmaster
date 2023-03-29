@@ -20,18 +20,20 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatListModule} from '@angular/material/list';
 import {MatTabsModule} from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from '@angular/material/dialog';
+import { CreateEditProcessDialogComponent } from './create-edit-process-dialog/create-edit-process-dialog.component';
 
 
 
 // @NgModule decorator with its metadata
 @NgModule({
-  declarations: [AppComponent, SmartListComponent, PresListComponent, SmartEditComponent, PresEditComponent, SmartDetailsComponent, PresDetailsComponent],
+  declarations: [AppComponent, SmartListComponent, PresListComponent, SmartEditComponent, PresEditComponent, SmartDetailsComponent, PresDetailsComponent, CreateEditProcessDialogComponent],
   imports: [BrowserModule, AppRoutingModule, 
     HttpClientModule, RouterModule, 
     ApiModule, MatCardModule, 
     MatButtonModule, MatToolbarModule, 
     MatIconModule, MatProgressSpinnerModule, 
-    MatTableModule, MatRadioModule, MatTooltipModule, MatListModule, MatTableModule, MatTabsModule, BrowserAnimationsModule ],
+    MatTableModule, MatRadioModule, MatTooltipModule, MatListModule, MatTableModule, MatTabsModule, BrowserAnimationsModule, MatDialogModule ],
   providers: [],
   bootstrap: [AppComponent]
 })

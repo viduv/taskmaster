@@ -27,6 +27,6 @@ export class SmartListComponent implements OnInit {
     console.log(process);
   }
   deleteProcess(process: GroupProcess) {
-    console.log(process);
+    this.supervisorService.deleteProcess(process?.name);
   }
 }

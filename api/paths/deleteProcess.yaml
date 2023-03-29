@@ -1,0 +1,21 @@
+get:
+  tags:
+    - taskmaster
+  operationId: deleteProcess
+  summary: delete un process
+  parameters:
+    - in: query
+      name: name
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 'OK'
+      content:
+        text/plain:
+          schema:
+            name: deleteProcess
+            type: string
+    '404':
+      description: "le process n'existe pas"

@@ -22,14 +22,14 @@
     </ul>
   </mat-card-content>
   <mat-card-footer>
-    <button mat-raised-button color="primary" (click)="editProcess(process)">Modifier</button>
-    <button mat-raised-button color="warn" (click)="deleteProcess(process)">Supprimer</button>
+    <button mat-raised-button color="primary" (click)="$event.stopPropagation(); editProcess(process)">Modifier</button>
+    <button mat-raised-button color="warn" (click)="$event.stopPropagation(); deleteProcess(process)">Supprimer</button>
   </mat-card-footer>
 </mat-card>
 </div>
 <div class="grid-card">
 <mat-card class="card">
-  <button mat-fab color="accent" aria-label="Example icon button with a home icon">
+  <button mat-fab color="accent" aria-label="Example icon button with a home icon" (click)="$event.stopPropagation(); addProcess()">
     <mat-icon>add</mat-icon>
   </button>
 

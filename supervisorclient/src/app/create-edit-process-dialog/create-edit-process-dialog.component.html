@@ -1,0 +1,36 @@
+<!-- 
+<ng-template matStepLabel>Edit {{simulationName}} </ng-template>
+<section class="section">
+<h3 class="title">Edit {{simulationName}}</h3>
+<div [formGroup]="group">
+  <div class="box-container">
+    <mat-form-field appearance="fill" class="box">
+      <mat-label>Edit name</mat-label>
+      <input matInput placeholder="Name" formControlName="nameFormGroup" required>
+      <mat-error *ngIf="group.get('nameFormGroup').hasError('pattern')">
+        Incorrect name </mat-error>
+        <mat-error *ngIf="group.get('nameFormGroup').hasError('required')">
+          Can't be blank </mat-error>
+      </mat-form-field>
+    <mat-form-field appearance="fill" class="box">
+      <mat-label>Edit average margin</mat-label>
+      <input matInput placeholder="Average Margin" formControlName="marginFormGroup" required>
+      <mat-error *ngIf="group.get('marginFormGroup').hasError('pattern')">
+        Incorrect value </mat-error>
+        <mat-error *ngIf="group.get('marginFormGroup').hasError('required')">
+          Can't be blank </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="box">
+      <mat-label>Edit average price</mat-label>
+      <input matInput placeholder="Average Price" formControlName="priceFormGroup" required>
+      <mat-error *ngIf="group.get('priceFormGroup').hasError('pattern')">
+        Incorrect value </mat-error>
+        <mat-error *ngIf="group.get('priceFormGroup').hasError('required')">
+          Can't be blank </mat-error>
+    </mat-form-field>
+  </div>
+  <mat-card-footer class="buttons">
+    <button mat-raised-button mat-dialog-close class="cancel">Cancel</button>
+    <button mat-raised-button mat-dialog-close class="next" color="primary" [disabled]="group.invalid"  [mat-dialog-close]="getReturnData()">Save</button>
+  </mat-card-footer>
+</div> -->

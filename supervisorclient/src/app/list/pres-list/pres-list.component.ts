@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GroupProcess, Process } from 'src/app/openapi';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { CreateEditProcessDialogComponent } from '../../create-edit-process-dialog/create-edit-process-dialog.component';
+
 
 @Component({
   selector: 'app-pres-list',
@@ -10,18 +13,34 @@ export class PresListComponent implements OnInit {
   @Input() processes : Array<GroupProcess> = [];
   @Output() editProcesses = new EventEmitter<GroupProcess>();
   @Output() deleteProcesses = new EventEmitter<GroupProcess>();
-  constructor() { }
+  constructor(
+    public dialog: MatDialog
+  ) { }
   
   ngOnInit(): void {
       console.log(this.processes)
   }
 
-  editProcess(process: GroupProcess) {
-    console.log(process);
-    this.editProcesses.emit(process);
+  addProcess() {
+    console.log("ADDING ")
+    this.dialog.open(CreateEditProcessDialogComponent, {
+      enterAnimationDuration: '250ms',
+      exitAnimationDuration: '250ms',
+    });
   }
+  editProcess(process: GroupProcess) {
+    console.log("EDITING")
+    this.dialog.open(CreateEditProcessDialogComponent, {
+      data : {
+        process,
+      },
+      enterAnimationDuration: '250ms',
+      exitAnimationDuration: '250ms',
+    });
+    // this.editProcesses.emit(process);
+  }
+
   deleteProcess(process: GroupProcess) {
-    console.log(process);
     this.deleteProcesses.emit(process);
   }
 }

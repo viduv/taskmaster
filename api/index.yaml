@@ -29,4 +29,7 @@ paths:
   /processLogError:
     summary: "Renvoi les logs d'Error d'un groupe de process"
     $ref: "./paths/processLogError.yaml"
+  /deleteProcess:
+    summary: "Delete un process"
+    $ref: "./paths/deleteProcess.yaml"
 
