@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GroupProcess, Process } from 'src/app/openapi';
 
 @Component({
@@ -8,7 +8,8 @@ import { GroupProcess, Process } from 'src/app/openapi';
 })
 export class PresListComponent implements OnInit {
   @Input() processes : Array<GroupProcess> = [];
-
+  @Output() editProcesses = new EventEmitter<GroupProcess>();
+  @Output() deleteProcesses = new EventEmitter<GroupProcess>();
   constructor() { }
   
   ngOnInit(): void {
@@ -17,8 +18,10 @@ export class PresListComponent implements OnInit {
 
   editProcess(process: GroupProcess) {
     console.log(process);
+    this.editProcesses.emit(process);
   }
   deleteProcess(process: GroupProcess) {
     console.log(process);
+    this.deleteProcesses.emit(process);
   }
 }

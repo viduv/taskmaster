@@ -25,9 +25,9 @@ export class PresDetailsComponent implements OnChanges{
     constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.getOutlog()
     if("groupProcess" in changes && this.groupProcess?.groupProcess?.name){
       this.getOutlog()
+      console.log(this.groupProcess)
     }
   }
 
@@ -45,11 +45,9 @@ export class PresDetailsComponent implements OnChanges{
   }
 
   getOutlog(){
-    console.log("getOutLog")
     this.getOutLogs.emit(this.groupProcess?.groupProcess?.name)
   }
   getErrorlog(){
-    console.log("getErrorLog")
     this.getErrorLogs.emit(this.groupProcess?.groupProcess?.name)
   }
   tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {

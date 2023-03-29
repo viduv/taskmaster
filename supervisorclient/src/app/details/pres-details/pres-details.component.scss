@@ -37,8 +37,8 @@ td, th {
 }
 
 .right-container {
-    overflow: auto;
-    height: 100%;
+    height: calc(100% - 64px);
+    width: calc(100% - 30%);
 }
 .right-card {
     background-color: #1E1E1E; /* couleur de fond */
@@ -48,4 +48,9 @@ td, th {
     line-height: 1.4; /* hauteur de ligne */
     padding: 10px; /* rembourrage */
     white-space: pre-line;
+    height: 100%;
+    border-radius: 10px;
+    margin-top: 5px;
+    // word-wrap: break-word;  
+    overflow: auto;
 }

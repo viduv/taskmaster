@@ -47,10 +47,15 @@ export class SupervisorService {
   }
 
   outLogs( processName : string): void {
-    console.log("ASKING API OUT LOGS" , "on" , processName)
     this.taskmasterService.processLog(processName).subscribe(value => {
       console.log(value)
       this.outLogsSubject.next(value)})
   }
 
+  startProcess(name: string): void {
+    this.taskmasterService.start(name)
+  }
+  stopProcess(name: string): void {
+    this.taskmasterService.stop(name)
+  }
 }

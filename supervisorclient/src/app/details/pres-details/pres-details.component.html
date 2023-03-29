@@ -31,7 +31,7 @@
         Start Process
       </button>
       <button mat-raised-button color="accent" aria-label="stop processes" (click)="stopProcess()" *ngIf="groupProcess?.groupProcess?.etat === 'RUN'">
-          Stop Process
+        Stop Process
         </button>
     </div>
     </div>
@@ -40,14 +40,14 @@
           <mat-tab label="Output Logs" (click)="getOutlog()"></mat-tab>
           <mat-tab label="Error Logs" (click)="getErrorlog()"></mat-tab>
         </mat-tab-group>
-        <mat-card class="right-card">
-          <mat-card-content *ngIf="indexlogs === 0">
+        <div class="right-card">
+          <div *ngIf="indexlogs === 0">
             {{outLogs}}
-          </mat-card-content>
-          <mat-card-content *ngIf="indexlogs === 1">
+          </div>
+          <div *ngIf="indexlogs === 1">
             {{errorLogs}}
-          </mat-card-content>
-        </mat-card>
+          </div>
+        </div>
       </div>
       <ng-template #spinner >
         <div class="center-spinner">

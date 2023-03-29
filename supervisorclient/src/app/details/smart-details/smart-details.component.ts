@@ -34,11 +34,9 @@ export class SmartDetailsComponent implements OnInit, OnDestroy {
   }
 
   startProc(groupProcess : GroupProcessDetails){
-
   }
 
   stopProc(groupProcess: GroupProcessDetails){
-
   }
 
   getOulog(processName : string){
