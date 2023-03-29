@@ -1,7 +1,24 @@
 import { Component, Inject } from '@angular/core';
-import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { GroupProcess } from '../openapi';
+import { EnvValue, ExitSignalType, GroupProcess, ProcessEtat } from '../openapi';
+import { RestartType } from '../openapi/model/restartType';
+
+interface GroupProcessForm {
+  name: FormControl<string>,
+  nbInstance: FormControl<number>,
+  startAtLaunch: FormControl<boolean>,
+  restartType: FormControl<RestartType>,
+  expectedExitCode: FormControl<number>,
+  startupTime: FormControl<number>,
+  restartRetryCount: FormControl<number>,
+  exitSignal: FormControl<ExitSignalType>,
+  gracefulStopTime: FormControl<number>,
+  environement: FormArray<FormControl<EnvValue>>,
+  umask: FormControl<string>,
+  etat: FormControl<ProcessEtat>,
+}
+
 
 @Component({
   selector: 'app-create-edit-process-dialog',
@@ -10,26 +27,34 @@ import { GroupProcess } from '../openapi';
 })
 export class CreateEditProcessDialogComponent {
 
-  group: UntypedFormGroup = new UntypedFormGroup({});
+  group: FormGroup<GroupProcessForm> = new FormGroup<GroupProcessForm>(
+    {
+      name: new FormControl<string>("", { nonNullable: true, validators: [Validators.required]}),
+      nbInstance: new FormControl<number>(1,  { nonNullable: true, validators: [Validators.required]}),
+      startAtLaunch: new FormControl<boolean>(true,  { nonNullable: true, validators: [Validators.required]}),
+      restartType: new FormControl<RestartType>(RestartType.Never, { nonNullable: true, validators: [Validators.required]}),
+      expectedExitCode: new FormControl<number>(0, { nonNullable: true, validators: [Validators.required]}),
+      startupTime: new FormControl<number>(5,  { nonNullable: true, validators: [Validators.required]}),
+      restartRetryCount: new FormControl<number>(1,  { nonNullable: true, validators: [Validators.required, Validators.min(1), Validators.max(2000)]}),
+      exitSignal: new FormControl<ExitSignalType>(ExitSignalType.Sigint,  { nonNullable: true, validators: [Validators.required]}),
+      gracefulStopTime: new FormControl<number>(5,  { nonNullable: true, validators: [Validators.required]}),
+      environement: new FormArray<FormControl<EnvValue>>([new FormControl<EnvValue>({key: "coucou", value : "coucou"}, { nonNullable: true, validators: [Validators.required]})]),
+      umask: new FormControl<string>("022",  { nonNullable: true, validators: [Validators.required]}),
+      etat: new FormControl<ProcessEtat>(ProcessEtat.Run , { nonNullable: true, validators: [Validators.required]})
+    }
+  );
   constructor( 
     public dialogRef: MatDialogRef<GroupProcess>,
-    @Inject(MAT_DIALOG_DATA) public data: any,) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    ) { }
   
     ngOnInit(): void {
-      console.log(this.data)
-        this.group = new UntypedFormGroup({
-          name: new FormControl(this.data?.name, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
-          nbInstance: new FormControl(this.data?.nbInstance),
-          startAtLaunch: new FormControl(this.data?.startAtLaunch),
-          restartType: new FormControl(this.data?.restartType),
-          expectedExitCode: new FormControl(this.data?.expectedExitCode),
-          startupTime: new FormControl(this.data?.startupTime),
-          restartRetryCount: new FormControl(this.data?.restartRetryCount),
-          exitSignal: new FormControl(this.data?.exitSignal),
-          gracefulStopTime: new FormControl(this.data?.gracefulStopTime),
-          environement: new FormControl(this.data?.environement),
-          umask: new FormControl(this.data?.umask),
-          etat: new FormControl(this.data?.etat),
-        })
+      if (this.data.process) {
+        this.group.patchValue(this.data.process);
       }
+
+      }
+    restartValue(){
+      return [RestartType.Always,  RestartType.Never, RestartType.OnFailure,];
+    }
 }

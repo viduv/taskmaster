@@ -22,9 +22,11 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDialogModule} from '@angular/material/dialog';
 import { CreateEditProcessDialogComponent } from './create-edit-process-dialog/create-edit-process-dialog.component';
-
-
-
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSelectModule} from '@angular/material/select';
 // @NgModule decorator with its metadata
 @NgModule({
   declarations: [AppComponent, SmartListComponent, PresListComponent, SmartEditComponent, PresEditComponent, SmartDetailsComponent, PresDetailsComponent, CreateEditProcessDialogComponent],
@@ -33,7 +35,7 @@ import { CreateEditProcessDialogComponent } from './create-edit-process-dialog/c
     ApiModule, MatCardModule, 
     MatButtonModule, MatToolbarModule, 
     MatIconModule, MatProgressSpinnerModule, 
-    MatTableModule, MatRadioModule, MatTooltipModule, MatListModule, MatTableModule, MatTabsModule, BrowserAnimationsModule, MatDialogModule ],
+    MatTableModule, MatRadioModule, MatTooltipModule, MatListModule, MatTableModule, MatTabsModule, BrowserAnimationsModule, MatDialogModule , MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatSlideToggleModule, MatSelectModule],
   providers: [],
   bootstrap: [AppComponent]
 })

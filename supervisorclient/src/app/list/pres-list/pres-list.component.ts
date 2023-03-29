@@ -24,6 +24,10 @@ export class PresListComponent implements OnInit {
   addProcess() {
     console.log("ADDING ")
     this.dialog.open(CreateEditProcessDialogComponent, {
+      data : {
+        process: undefined,
+        edit : true,
+      },
       enterAnimationDuration: '250ms',
       exitAnimationDuration: '250ms',
     });
@@ -33,6 +37,7 @@ export class PresListComponent implements OnInit {
     this.dialog.open(CreateEditProcessDialogComponent, {
       data : {
         process,
+        edit: false,
       },
       enterAnimationDuration: '250ms',
       exitAnimationDuration: '250ms',
