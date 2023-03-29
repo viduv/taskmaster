@@ -52,10 +52,14 @@ export class SupervisorService {
       this.outLogsSubject.next(value)})
   }
 
-  startProcess(name: string): void {
+  startProcess(name: string | undefined): void {
+    if(name !== undefined){
     this.taskmasterService.start(name)
+    }
   }
-  stopProcess(name: string): void {
+  stopProcess(name: string | undefined): void {
+    if(name !== undefined){
     this.taskmasterService.stop(name)
+    }
   }
 }

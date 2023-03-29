@@ -34,9 +34,11 @@ export class SmartDetailsComponent implements OnInit, OnDestroy {
   }
 
   startProc(groupProcess : GroupProcessDetails){
+    this.supervisorService.startProcess(groupProcess?.groupProcess?.name)
   }
 
   stopProc(groupProcess: GroupProcessDetails){
+    this.supervisorService.stopProcess(groupProcess?.groupProcess?.name)
   }
 
   getOulog(processName : string){
