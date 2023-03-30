@@ -3,6 +3,8 @@ GroupProcess:
     properties:
       name:
         type: string
+      command:
+        type: string
       nbInstance:
         type: integer
         minimum: 1
@@ -29,6 +31,7 @@ GroupProcess:
         $ref: "./ProcessEtat.yaml#/ProcessEtat"
     required:
       - name
+      - command
       - nbInstance
       - startAtLaunch
       - restartType

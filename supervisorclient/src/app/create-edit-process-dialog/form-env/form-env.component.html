@@ -1,0 +1,13 @@
+<form *ngIf="group" [formGroup]="group">
+  <mat-form-field appearance="fill" class="box">
+    <mat-label>Clef</mat-label>
+    <input matInput placeholder="Clef" formControlName="key" required>
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="box">
+    <mat-label>Valeur</mat-label>
+    <input matInput placeholder="Valeur" formControlName="value" required>
+  </mat-form-field>
+  <button mat-fab color="warn" (click)="delete.emit()">
+    <mat-icon>delete</mat-icon>
+  </button>
+</form>

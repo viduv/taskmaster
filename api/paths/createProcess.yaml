@@ -1,0 +1,15 @@
+put:
+  tags:
+    - taskmaster
+  operationId: createProcess
+  summary: Ajoute un process
+  requestBody:
+    description: Nouveau process à ajouter
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/GroupProcess.yaml#/GroupProcess'
+  responses:
+    '200':
+      description: 'OK'

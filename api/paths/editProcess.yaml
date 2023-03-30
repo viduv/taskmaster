@@ -1,0 +1,23 @@
+patch:
+  tags:
+    - taskmaster
+  operationId: editProcess
+  summary: Modifie un process
+  parameters:
+    - in: query
+      name: name
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: Nouvel etat du process
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/GroupProcess.yaml#/GroupProcess'
+  responses:
+    '200':
+      description: 'OK'
+    '404':
+      description: "le process n'existe pas"

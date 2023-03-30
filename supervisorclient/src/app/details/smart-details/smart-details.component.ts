@@ -1,7 +1,7 @@
-import { Component , OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { GroupProcessDetails } from 'src/app/openapi';
-import { SupervisorService } from 'src/app/supervisor.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {GroupProcessDetails} from 'src/app/openapi';
+import {SupervisorService} from 'src/app/supervisor.service';
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -24,7 +24,8 @@ export class SmartDetailsComponent implements OnInit, OnDestroy {
   constructor(
     public supervisorService: SupervisorService,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.routerSubscription = this.activatedRoute.params.subscribe(params => {
@@ -32,23 +33,23 @@ export class SmartDetailsComponent implements OnInit, OnDestroy {
     })
   }
 
-  startProc(groupProcess : GroupProcessDetails){
+  startProc(groupProcess: GroupProcessDetails) {
     this.supervisorService.startProcess(groupProcess?.groupProcess?.name)
   }
 
-  stopProc(groupProcess: GroupProcessDetails){
+  stopProc(groupProcess: GroupProcessDetails) {
     this.supervisorService.stopProcess(groupProcess?.groupProcess?.name)
   }
 
-  getOutlog(processName : string){
+  getOutlog(processName: string) {
     this.supervisorService.outLogs(processName)
   }
 
-  getErrorlog(processName: string){
+  getErrorlog(processName: string) {
     this.supervisorService.errorLogs(processName)
   }
 
   ngOnDestroy(): void {
-      this.routerSubscription?.unsubscribe()
+    this.routerSubscription?.unsubscribe()
   }
 }

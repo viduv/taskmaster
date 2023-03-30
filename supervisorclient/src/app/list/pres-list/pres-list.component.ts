@@ -26,10 +26,11 @@ export class PresListComponent implements OnInit {
   addProcess() {
     console.log("ADDING ")
     this.dialog.open(CreateEditProcessDialogComponent, {
-      width: '500px',
+      width: '70%',
+      height: '80%',
       data: {
         process: undefined,
-        edit: true,
+        edit: false,
       },
       enterAnimationDuration: '250ms',
       exitAnimationDuration: '250ms',
@@ -39,15 +40,15 @@ export class PresListComponent implements OnInit {
   editProcess(process: GroupProcess) {
     console.log("EDITING")
     this.dialog.open(CreateEditProcessDialogComponent, {
-      width: '500px',
+      width: '70%',
+      height: '80%',
       data: {
         process,
-        edit: false,
+        edit: true,
       },
       enterAnimationDuration: '250ms',
       exitAnimationDuration: '250ms',
     });
-    // this.editProcesses.emit(process);
   }
 
   deleteProcess(process: GroupProcess) {

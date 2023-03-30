@@ -11,6 +11,7 @@
   <mat-card-content>
     <ul>
       <li>Nombre d'instances :  {{process.nbInstance}} </li>
+      <li>Commande de lancement :  {{process.command}} </li>
       <li>Démarrer au lancement :  {{process.startAtLaunch ? 'Oui' : 'Non'}}</li>
       <li>Type de redémarrage :  {{process.restartType}}</li>
       <li>Code de sortie attendu :  {{process.expectedExitCode}}</li>

@@ -17,9 +17,6 @@ paths:
   /listGroupProcess:
     summary: "Retourne la liste des process"
     $ref: "./paths/listGroupProcess.yaml"
-  /updateConfig:
-    summary: "Met a jour le fichier de configuration"
-    $ref: "./paths/updateConfig.yaml"
   /groupProcess:
     summary: "Renvois un groupe de process"
     $ref: "./paths/groupProcess.yaml"
@@ -32,4 +29,9 @@ paths:
   /deleteProcess:
     summary: "Delete un process"
     $ref: "./paths/deleteProcess.yaml"
-
+  /editProcess:
+    summary: "Edit un process"
+    $ref: "./paths/editProcess.yaml"
+  /createProcess:
+    summary: "Ajoute un process"
+    $ref: "./paths/createProcess.yaml"
