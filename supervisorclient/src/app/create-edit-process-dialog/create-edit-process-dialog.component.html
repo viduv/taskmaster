@@ -57,8 +57,20 @@
       <input matInput placeholder="gracefulStopTime" formControlName="gracefulStopTime" required>
     </mat-form-field>
     <mat-form-field appearance="fill" class="box">
-      <mat-label>Temps d'arret</mat-label>
+      <mat-label>Umask</mat-label>
       <input matInput placeholder="umask" formControlName="umask" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="box">
+      <mat-label>Chemin du fichier de la sortie standard</mat-label>
+      <input matInput placeholder="stdout" formControlName="stdout" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="box">
+      <mat-label>Chemin du fichier de la sortie d'erreur</mat-label>
+      <input matInput placeholder="stderr" formControlName="stderr" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="box">
+      <mat-label>Repertoire de travail courant </mat-label>
+      <input matInput placeholder="workingdir" formControlName="workingdir" required>
     </mat-form-field>
     <div formArrayName="environement">
       <div class="env-title">

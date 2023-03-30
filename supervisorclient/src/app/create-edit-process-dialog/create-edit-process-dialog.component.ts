@@ -19,6 +19,9 @@ interface GroupProcessForm {
   environement: FormArray<FormGroup<EnvValueForm>>,
   umask: FormControl<string>,
   etat: FormControl<ProcessEtat>,
+  stdout: FormControl<string>,
+  stderr: FormControl<string>,
+  workingdir: FormControl<string>
 }
 
 export interface EnvValueForm {
@@ -60,7 +63,10 @@ export class CreateEditProcessDialogComponent implements OnInit {
       etat: new FormControl<ProcessEtat>({value: ProcessEtat.Run, disabled: true}, {
         nonNullable: true,
         validators: [Validators.required]
-      })
+      }),
+      stdout: new FormControl<string>("", {nonNullable: true, }),
+      stderr: new FormControl<string>("", {nonNullable: true, }),
+      workingdir: new FormControl<string>("", {nonNullable: true, }),
     }
   );
 
@@ -92,9 +98,9 @@ export class CreateEditProcessDialogComponent implements OnInit {
 
   getReturnData() {
     if (this.data.edit) {
-      this.supervisorService.editProcess(this.data.process.name, this.group.getRawValue()).subscribe();
+      this.supervisorService.editProcess(this.data.process.name, this.group.getRawValue());
     } else {
-      this.supervisorService.createProcess(this.group.getRawValue()).subscribe();
+      this.supervisorService.createProcess(this.group.getRawValue());
     }
   }
 

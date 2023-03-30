@@ -31,8 +31,8 @@
 }
 
 mat-card-footer {
-  display: flex;
-  justify-content: end;
+  display: flex-end;
+  // justify-content: end;
   margin: 0 16px;
 
   & :first-child {

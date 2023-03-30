@@ -29,6 +29,13 @@ GroupProcess:
         type: string
       etat:
         $ref: "./ProcessEtat.yaml#/ProcessEtat"
+      stdout:
+        type: string
+      stderr:
+        type: string
+      workingdir:
+        type: string
+
     required:
       - name
       - command
@@ -43,3 +50,6 @@ GroupProcess:
       - environement
       - umask
       - etat
+      - stdout
+      - stderr
+      - workingdir

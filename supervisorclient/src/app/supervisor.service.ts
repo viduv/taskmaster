@@ -69,12 +69,14 @@ export class SupervisorService {
     }
   }
 
-  createProcess(groupProcess: GroupProcess): Observable<void> {
-    return this.taskmasterService.createProcess(groupProcess);
+  createProcess(groupProcess: GroupProcess) {
+    this.taskmasterService.createProcess(groupProcess).subscribe(() => this.listProcess());
   }
 
-  editProcess(name: string, groupProcess: GroupProcess): Observable<void> {
-    return this.taskmasterService.editProcess(name, groupProcess);
+  editProcess(name: string, groupProcess: GroupProcess)  {
+    if(name !== undefined){
+      this.taskmasterService.editProcess(name, groupProcess).subscribe(() => this.listProcess() )
+    }
   }
 
   clearprocessLogs(): void {
