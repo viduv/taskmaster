@@ -1,5 +1,5 @@
 <div class="container">
-<div class="card-container" *ngIf="processes.length > 0; else spinner">
+<div class="card-container">
   <div class="grid-card" *ngFor="let process of processes">
 <mat-card class="card" [routerLink]="['/details/' + process.name]" >
   <mat-card-header>
@@ -19,10 +19,13 @@
       <li>Nombre de tentatives de redémarrage :  {{process.restartRetryCount}}</li>
       <li>Signal de sortie :  {{process.exitSignal }}</li>
       <li>Temps d'arrêt en douceur :  {{process.gracefulStopTime}} s</li>
-      <li>Environnement : {{process.environement}}</li>
       <li>Chemin du fichier de la sortie standard : {{process.stdout}} </li>
       <li>Chemin du fichier de la sortie d'erreur : {{process.stderr}} </li>
       <li>Repertoire de travail courant : {{process.workingdir}} </li>
+      <b> Environnement :</b>
+      <div *ngFor="let proc of process?.environement">
+        <li> {{ proc.key }} : {{ proc.value }}</li>
+      </div>
     </ul>
   </mat-card-content>
   <mat-card-footer>
@@ -40,9 +43,4 @@
   </mat-card>
 </div>
 </div>
-<ng-template #spinner >
-  <div class="center-spinner">
-  <mat-spinner color="accent" ></mat-spinner>
-</div>
-</ng-template>
 </div>

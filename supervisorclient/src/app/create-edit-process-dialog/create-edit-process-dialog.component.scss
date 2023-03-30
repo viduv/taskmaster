@@ -31,11 +31,16 @@
 }
 
 mat-card-footer {
-  display: flex-end;
-  // justify-content: end;
+  display: flex;
+  justify-content: flex-end;
+
   margin: 0 16px;
 
   & :first-child {
     margin-right: 8px;
   }
+}
+
+mat-slide-toggle {
+  padding: 0 0 10px 0;
 }

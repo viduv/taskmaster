@@ -6,20 +6,20 @@
     <mat-form-field appearance="fill" class="box">
       <mat-label>Name</mat-label>
       <input matInput placeholder="Name" formControlName="name" required>
-      <!-- <mat-error *ngIf="group.get('name')?.hasError('required')">
-        Can't be blank </mat-error> -->
+      <mat-error *ngIf="group.get('name')?.hasError('required')">
+        Ne dois pas etre vide </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="box">
       <mat-label>Commande</mat-label>
       <input matInput placeholder="Commande" formControlName="command" required>
-      <!-- <mat-error *ngIf="group.get('name')?.hasError('required')">
-        Can't be blank </mat-error> -->
+      <mat-error *ngIf="group.get('command')?.hasError('required')">
+        Ne dois pas etre vide </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="box">
       <mat-label>Nombre d'instance</mat-label>
       <input matInput placeholder="nbInstance" formControlName="nbInstance" required>
-      <!-- <mat-error *ngIf="group.get('name')?.hasError('required')">
-        Can't be blank </mat-error> -->
+      <mat-error *ngIf="group.get('nbInstance')?.hasError('required')">
+        Ne dois pas etre vide </mat-error>
     </mat-form-field>
     <mat-slide-toggle required color="accent" formControlName="startAtLaunch">
       Start at launch
@@ -35,15 +35,27 @@
     <mat-form-field appearance="fill" class="box">
       <mat-label>Code de Sortie Attendu</mat-label>
       <input matInput placeholder="expectedExitCode" formControlName="expectedExitCode" required>
+      <mat-error *ngIf="group.get('expectedExitCode')?.hasError('required')">
+        Ne dois pas etre vide </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="box">
       <mat-label>Temps de demarrage</mat-label>
       <input matInput placeholder="startupTime" formControlName="startupTime" required>
+      <mat-error *ngIf="group.get('startupTime')?.hasError('required')">
+        Ne dois pas etre vide </mat-error>
+
     </mat-form-field>
     <mat-form-field appearance="fill" class="box">
       <mat-label>Nombre de tentavide de redemarrage</mat-label>
       <input matInput placeholder="restartRetryCount" formControlName="restartRetryCount" required>
+      <mat-error *ngIf="group.get('name')?.hasError('required')">
+        Ne dois pas etre vide </mat-error>
+        <mat-error *ngIf="group.get('restartRetryCount')?.hasError('min')">
+          La valeur doit etre superieur a 0 </mat-error>
+          <mat-error *ngIf="group.get('restartRetryCount')?.hasError('max')">
+            La valeur doit etre inferieur a 2000 </mat-error>
     </mat-form-field>
+
     <mat-form-field>
       <mat-label>Signal de sortie</mat-label>
       <mat-select formControlName='exitSignal'>
