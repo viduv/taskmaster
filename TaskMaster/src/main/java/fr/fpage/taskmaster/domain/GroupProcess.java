@@ -42,14 +42,16 @@ public class GroupProcess {
     }
 
     public void start() {
-        for (int i = 0; i < this.configuration.getNbInstance(); i++) {
+        if (this.processes.stream().noneMatch(process -> process.getEtat().equals(ProcessEtat.RUN))) {
             this.processes.clear();
-            this.processes.add(new Process(this.configuration, this.jnaService));
+            for (int i = 0; i < this.configuration.getNbInstance(); i++) {
+                this.processes.add(new Process(this.configuration, this.jnaService));
+            }
+            this.processes.forEach(process -> {
+                if (process.getEtat().equals(ProcessEtat.STOP))
+                    process.start();
+            });
         }
-        this.processes.forEach(process -> {
-            if (process.getEtat().equals(ProcessEtat.STOP))
-                process.start();
-        });
     }
 
     public void stop() {
@@ -67,7 +69,6 @@ public class GroupProcess {
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                stringBuilder.append(line);
                 stringBuilder.append(line).append("\n");
             }
             scanner.close();

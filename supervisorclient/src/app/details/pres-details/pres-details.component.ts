@@ -1,17 +1,24 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
-import { ThemePalette } from '@angular/material/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
-import { GroupProcessDetails } from 'src/app/openapi';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {ThemePalette} from '@angular/material/core';
+import {MatTabChangeEvent} from '@angular/material/tabs';
+import {GroupProcessDetails} from 'src/app/openapi';
 
 @Component({
   selector: 'app-pres-details',
   templateUrl: './pres-details.component.html',
   styleUrls: ['./pres-details.component.scss']
 })
-export class PresDetailsComponent implements OnChanges{
+export class PresDetailsComponent implements OnChanges {
+  get outLogs(): string {
+    return this._outLogs;
+  }
+
+  @Input() set outLogs(value: string) {
+    this._outLogs = value;
+  }
 
   @Input() groupProcess: GroupProcessDetails = {};
-  @Input() outLogs: string = ""
+  private _outLogs: string = ""
   @Input() errorLogs: string = ""
 
   @Output() startProc = new EventEmitter<GroupProcessDetails>;
@@ -19,39 +26,45 @@ export class PresDetailsComponent implements OnChanges{
   @Output() getOutLogs = new EventEmitter<string>;
   @Output() getErrorLogs = new EventEmitter<string>;
 
-  indexlogs : number = 0;
+  indexlogs: number = 0;
 
   displayedColumns: string[] = ['pid', 'etat'];
-    constructor() { }
+
+  constructor() {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.outLogs)
-    if("groupProcess" in changes && this.groupProcess?.groupProcess?.name){
+    if ("groupProcess" in changes && this.groupProcess?.groupProcess?.name) {
       this.getOutlog()
     }
   }
 
-  startProcess(){
+  startProcess() {
     this.startProc.emit(this.groupProcess);
   }
-  stopProcess(){
+
+  stopProcess() {
     this.stopProc.emit(this.groupProcess);
   }
+
   getRadioColor(etat: string): ThemePalette {
     return etat === 'RUN' ? 'primary' : etat === 'PARTIAL' ? 'accent' : etat === 'STOP' ? 'warn' : 'primary'
   }
+
   getTooltip(etat: string): string {
     return etat === 'RUN' ? 'running' : etat === 'PARTIAL' ? 'partial' : etat === 'STOP' ? 'stop' : ''
   }
 
-  getOutlog(){
+  getOutlog() {
     this.getOutLogs.emit(this.groupProcess?.groupProcess?.name)
   }
-  getErrorlog(){
+
+  getErrorlog() {
     this.getErrorLogs.emit(this.groupProcess?.groupProcess?.name)
   }
+
   tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
     this.indexlogs = tabChangeEvent.index;
     this.indexlogs === 0 ? this.getOutlog() : this.getErrorlog()
-}
+  }
 }

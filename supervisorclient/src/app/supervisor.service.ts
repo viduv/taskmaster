@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {GroupProcess, GroupProcessDetails, TaskmasterService} from './openapi';
 
 @Injectable({
@@ -7,11 +7,10 @@ import {GroupProcess, GroupProcessDetails, TaskmasterService} from './openapi';
 })
 export class SupervisorService {
 
-  groupProcessSubject : ReplaySubject<GroupProcessDetails> = new ReplaySubject<GroupProcessDetails>;
-  listProcessSubject : ReplaySubject<Array<GroupProcess>> = new ReplaySubject<Array<GroupProcess>>;
-  outLogsSubject : BehaviorSubject<string> = new BehaviorSubject<string>("");
-  errorLogsSubject :BehaviorSubject<string> = new BehaviorSubject<string>("");
-
+  groupProcessSubject: BehaviorSubject<GroupProcessDetails> = new BehaviorSubject<GroupProcessDetails>({});
+  listProcessSubject: BehaviorSubject<Array<GroupProcess>> = new BehaviorSubject<Array<GroupProcess>>([]);
+  outLogsSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  errorLogsSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   constructor(private taskmasterService: TaskmasterService) {
   }
@@ -33,42 +32,46 @@ export class SupervisorService {
   }
 
   groupProcess(processName: string): void {
-    this.taskmasterService.groupProcess(processName).subscribe(value => this.groupProcessSubject.next(value))
+    this.taskmasterService.groupProcess(processName).subscribe(value => this.groupProcessSubject.next(value));
   }
 
   listProcess(): void {
     this.taskmasterService.listGroupProcess().subscribe(value => {
-      this.listProcessSubject.next(value)
+      this.listProcessSubject.next(value);
     });
   }
 
-  errorLogs(processName : string): void {
-    this.taskmasterService.processLogError(processName).subscribe(value => this.errorLogsSubject.next(value))
+  errorLogs(processName: string): void {
+    this.taskmasterService.processLogError(processName).subscribe(value => this.errorLogsSubject.next(value));
   }
 
-  outLogs( processName : string): void {
+  outLogs(processName: string): void {
     this.taskmasterService.processLog(processName).subscribe(value => {
-      this.outLogsSubject.next(value)})
+      this.outLogsSubject.next(value);
+    });
   }
 
   startProcess(name: string | undefined): void {
-    if(name !== undefined){
-    this.taskmasterService.start(name).subscribe(() => this.groupProcess(name))
+    if (name !== undefined) {
+      this.taskmasterService.start(name).subscribe(() => this.groupProcess(name));
     }
   }
+
   stopProcess(name: string | undefined): void {
-    if(name !== undefined){
-      this.taskmasterService.stop(name).subscribe(() => this.groupProcess(name))
+    if (name !== undefined) {
+      this.taskmasterService.stop(name).subscribe(() => this.groupProcess(name));
     }
   }
+
   deleteProcess(name: string | undefined): void {
-    if(name !== undefined){
-      this.taskmasterService.deleteProcess(name).subscribe(() => this.listProcess())
+    if (name !== undefined) {
+      this.taskmasterService.deleteProcess(name).subscribe(() => this.listProcess());
     }
   }
 
   clearprocessLogs(): void {
     this.outLogsSubject.next("");
     this.errorLogsSubject.next("");
+    this.groupProcessSubject.next({})
   }
 }

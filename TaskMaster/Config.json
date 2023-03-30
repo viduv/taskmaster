@@ -15,11 +15,12 @@
       "name": "yes",
       "cmd": "yes",
       "expectedExitCode": 130,
-      "exitSignal": "SIGTERM",
+      "exitSignal": "SIGINT",
       "nbInstance": 3,
       "stdoutFile": "/tmp/yes.log",
       "stderrFile": "/tmp/yesErr.log",
-      "restartType": "ALWAYS"
+      "restartType": "ALWAYS",
+      "gracefulStopTime": 10
     },
     {
       "name": "env",

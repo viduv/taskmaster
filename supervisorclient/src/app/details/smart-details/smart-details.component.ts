@@ -6,20 +6,19 @@ import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-smart-details',
-  template: `<app-pres-details
-  style="height: calc(100% - 64px); display: block;"
-  [groupProcess]="(supervisorService.getGroupProcessSubject() | async) ?? {}"
-  [outLogs]="(supervisorService.getOutlogsSubject() | async) ?? ''"
-  [errorLogs]="(supervisorService.getErrorLogsSubject() | async) ?? ''"
-  (startProc)="startProc($event)"
-  (stopProc)="stopProc($event)"
-  (getErrorLogs)="getErrorlog($event)"
-  (getOutLogs)="getOulog($event)"
-  ></app-pres-details>`,
+  template: `
+    <app-pres-details
+      style="height: calc(100% - 64px); display: block;"
+      [groupProcess]="(supervisorService.getGroupProcessSubject() | async) ?? {}"
+      [outLogs]="(supervisorService.getOutlogsSubject() | async) ?? ''"
+      [errorLogs]="(supervisorService.getErrorLogsSubject() | async) ?? ''"
+      (startProc)="startProc($event)"
+      (stopProc)="stopProc($event)"
+      (getErrorLogs)="getErrorlog($event)"
+      (getOutLogs)="getOutlog($event)"
+    ></app-pres-details>`,
 })
 export class SmartDetailsComponent implements OnInit, OnDestroy {
-
-  groupProcess: Observable<GroupProcessDetails> = new Observable<GroupProcessDetails>();
   routerSubscription: Subscription | undefined = undefined;
 
   constructor(
@@ -41,15 +40,14 @@ export class SmartDetailsComponent implements OnInit, OnDestroy {
     this.supervisorService.stopProcess(groupProcess?.groupProcess?.name)
   }
 
-  getOulog(processName : string){
+  getOutlog(processName : string){
     this.supervisorService.outLogs(processName)
   }
 
   getErrorlog(processName: string){
-    console.log(processName)
     this.supervisorService.errorLogs(processName)
   }
-  
+
   ngOnDestroy(): void {
       this.routerSubscription?.unsubscribe()
   }

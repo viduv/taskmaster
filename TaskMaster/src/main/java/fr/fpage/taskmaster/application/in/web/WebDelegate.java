@@ -141,4 +141,21 @@ public class WebDelegate implements TaskmasterApi {
         }
         return ResponseEntity.ok().build();
     }
+
+    /**
+     * GET /deleteProcess : delete un process
+     *
+     * @param name (required)
+     * @return OK (status code 200)
+     * or le process n&#39;existe pas (status code 404)
+     */
+    @Override
+    public ResponseEntity<Void> deleteProcess(String name) {
+        try {
+            this.processService.deleteProcess(name);
+            return ResponseEntity.ok().build();
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

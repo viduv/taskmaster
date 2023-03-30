@@ -22,6 +22,8 @@ public class Process {
     private Thread errorThread;
     private java.lang.Process process;
 
+    private boolean stop = false;
+
     public Process(ProcessConfiguration configuration, JNAService jnaService) {
         this.configuration = configuration;
         this.jnaService = jnaService;
@@ -29,15 +31,18 @@ public class Process {
 
     public void start() {
         Logger.getGlobal().log(Level.INFO, "Start process thread " + this.configuration.getName());
-
+        this.stop = false;
         this.processThread = new Thread(() -> {
-            this.etat = ProcessEtat.RUN;
             boolean processError;
             do {
+                System.out.println("set to RUN " + (this.getProcess() != null ? this.getProcess().pid() : "NO_PID"));
+                this.etat = ProcessEtat.RUN;
+                System.out.println("Start process " + (this.getProcess() != null ? this.getProcess().pid() : "NO_PID"));
                 processError = this.runProcess();
+                System.out.println("Set to STOP " + (this.getProcess() != null ? this.getProcess().pid() : "NO_PID"));
+                this.etat = ProcessEtat.STOP;
             }
-            while (this.configuration.getRestartType().equals(RestartType.ALWAYS) || this.configuration.getRestartType().equals(RestartType.ON_FAILURE) && processError);
-            this.etat = ProcessEtat.STOP;
+            while ((this.configuration.getRestartType().equals(RestartType.ALWAYS) || this.configuration.getRestartType().equals(RestartType.ON_FAILURE) && processError) && !this.stop);
         });
         this.processThread.start();
 
@@ -69,8 +74,7 @@ public class Process {
                         Logger.getLogger(configuration.getName()).info(line);
                     Thread.sleep(10);
                 }
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
+            } catch (IOException | InterruptedException ignored) {
             }
         });
         this.errorThread = new Thread(() -> {
@@ -87,8 +91,7 @@ public class Process {
                         Logger.getLogger(configuration.getName()).warning(line);
                     Thread.sleep(10);
                 }
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
+            } catch (IOException | InterruptedException ignored) {
             }
         });
         this.outputThread.start();
@@ -96,13 +99,20 @@ public class Process {
         try {
             this.process.waitFor();
         } catch (InterruptedException ignored) {
-            ignored.printStackTrace();
         }
-        Logger.getGlobal().log(Level.INFO, "Exit process value: " + this.process.exitValue());
-        return this.process.exitValue() != this.configuration.getExpectedExitCode();
+        try {
+            Logger.getGlobal().log(Level.INFO, "Exit process value: " + this.process.exitValue());
+            return this.process.exitValue() != this.configuration.getExpectedExitCode();
+        } catch (Exception ignored) {
+        }
+        return true;
     }
 
     public void stopProcess() {
+        this.stop = true;
+        this.outputThread.interrupt();
+        this.errorThread.interrupt();
+        this.processThread.interrupt();
         this.jnaService.kill(this.process, this.configuration.getExitSignal());
         try {
             this.process.waitFor(this.configuration.getGracefulStopTime(), TimeUnit.SECONDS);
@@ -113,9 +123,6 @@ public class Process {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        this.outputThread.interrupt();
-        this.errorThread.interrupt();
-        this.processThread.interrupt();
         this.etat = ProcessEtat.STOP;
     }
 }

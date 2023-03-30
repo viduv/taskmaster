@@ -57,4 +57,8 @@ public class ProcessService {
     public String getStderrLogs(String name) throws NullPointerException {
         return this.processMap.get(name).getStderrLogs();
     }
+
+    public void deleteProcess(String programName) {
+        this.processMap.remove(programName).stop();
+    }
 }
