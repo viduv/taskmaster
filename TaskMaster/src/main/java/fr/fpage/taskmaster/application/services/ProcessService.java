@@ -3,6 +3,7 @@ package fr.fpage.taskmaster.application.services;
 import fr.fpage.backend.openapi.model.GroupProcessDetails;
 import fr.fpage.taskmaster.domain.GroupProcess;
 import fr.fpage.taskmaster.model.Configuration;
+import fr.fpage.taskmaster.model.ProcessConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -60,5 +61,13 @@ public class ProcessService {
 
     public void deleteProcess(String programName) {
         this.processMap.remove(programName).stop();
+    }
+
+    public void createProcess(ProcessConfiguration groupProcess) {
+        try {
+            this.processMap.put(groupProcess.getName(), new GroupProcess(groupProcess, this.jnaService));
+            this.processMap.get(groupProcess.getName()).start();
+        } catch (IOException e) {
+        }
     }
 }

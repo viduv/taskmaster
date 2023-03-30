@@ -92,9 +92,9 @@ export class CreateEditProcessDialogComponent implements OnInit {
 
   getReturnData() {
     if (this.data.edit) {
-      this.supervisorService.editProcess(this.data.process.name, this.group.getRawValue());
+      this.supervisorService.editProcess(this.data.process.name, this.group.getRawValue()).subscribe();
     } else {
-      this.supervisorService.createProcess(this.group.getRawValue());
+      this.supervisorService.createProcess(this.group.getRawValue()).subscribe();
     }
   }
 

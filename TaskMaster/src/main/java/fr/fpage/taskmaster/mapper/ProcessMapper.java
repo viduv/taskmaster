@@ -6,6 +6,7 @@ import fr.fpage.backend.openapi.model.ProcessEtat;
 import fr.fpage.backend.openapi.model.RestartType;
 import fr.fpage.taskmaster.domain.GroupProcess;
 import fr.fpage.taskmaster.domain.Process;
+import fr.fpage.taskmaster.model.ProcessConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -30,6 +31,7 @@ public interface ProcessMapper {
         }
         return new fr.fpage.backend.openapi.model.GroupProcess().name(domain.getConfiguration().getName())
                 .nbInstance(domain.getConfiguration().getNbInstance())
+                .command(domain.getConfiguration().getCmd())
                 .startAtLaunch(domain.getConfiguration().isStartAtLaunch())
                 .restartType(this.restartTypeDomainToApi(domain.getConfiguration().getRestartType()))
                 .expectedExitCode(domain.getConfiguration().getExpectedExitCode())
@@ -57,4 +59,7 @@ public interface ProcessMapper {
 
     @Mapping(target = "pid", expression = "java((int)domain.getProcess().pid())")
     fr.fpage.backend.openapi.model.Process domainProcessToOpenApi(fr.fpage.taskmaster.domain.Process domain);
+
+    @Mapping(target = "cmd", source = "command")
+    ProcessConfiguration GroupProcessApiToGroupProcessConfiguration(fr.fpage.backend.openapi.model.GroupProcess groupProcess);
 }

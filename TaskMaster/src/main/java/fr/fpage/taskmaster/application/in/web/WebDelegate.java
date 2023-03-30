@@ -30,19 +30,6 @@ public class WebDelegate implements TaskmasterApi {
         return ResponseEntity.ok(this.processService.listProcess().stream().map(ProcessMapper.INSTANCE::domainToApi).toList());
     }
 
-
-    /**
-     * POST /updateConfig : Met a jour le fichier de configuration
-     *
-     * @param body Json file (required)
-     * @return ok (status code 200)
-     * @see TaskmasterApi#updateConfig
-     */
-    @Override
-    public ResponseEntity<Void> updateConfig(String body) {
-        return TaskmasterApi.super.updateConfig(body);
-    }
-
     /**
      * GET /groupProcess : Renvois un groupe de process
      *
@@ -157,5 +144,30 @@ public class WebDelegate implements TaskmasterApi {
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    /**
+     * PUT /createProcess : Ajoute un process
+     *
+     * @param groupProcess Nouveau process à ajouter (required)
+     * @return OK (status code 200)
+     */
+    @Override
+    public ResponseEntity<Void> createProcess(GroupProcess groupProcess) {
+        this.processService.createProcess(ProcessMapper.INSTANCE.GroupProcessApiToGroupProcessConfiguration(groupProcess));
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * PATCH /editProcess : Modifie un process
+     *
+     * @param name         (required)
+     * @param groupProcess Nouvel etat du process (required)
+     * @return OK (status code 200)
+     * or le process n&#39;existe pas (status code 404)
+     */
+    @Override
+    public ResponseEntity<Void> editProcess(String name, GroupProcess groupProcess) {
+        return TaskmasterApi.super.editProcess(name, groupProcess);
     }
 }

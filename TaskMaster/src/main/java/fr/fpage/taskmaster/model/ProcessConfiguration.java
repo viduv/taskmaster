@@ -1,12 +1,15 @@
 package fr.fpage.taskmaster.model;
 
+import jdk.jfr.SettingDefinition;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.HashMap;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @ToString
 public class ProcessConfiguration {
