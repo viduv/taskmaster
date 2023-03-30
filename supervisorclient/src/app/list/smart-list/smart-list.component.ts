@@ -20,6 +20,8 @@ export class SmartListComponent implements OnInit {
     {}
 
   ngOnInit(): void {
+    console.log("process clear")
+    // this.supervisorService.clearprocessLogs();
     this.supervisorService.listProcess();
   }
 

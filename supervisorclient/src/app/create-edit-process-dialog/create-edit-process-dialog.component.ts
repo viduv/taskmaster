@@ -32,15 +32,15 @@ export class CreateEditProcessDialogComponent {
       name: new FormControl<string>("", { nonNullable: true, validators: [Validators.required]}),
       nbInstance: new FormControl<number>(1,  { nonNullable: true, validators: [Validators.required]}),
       startAtLaunch: new FormControl<boolean>(true,  { nonNullable: true, validators: [Validators.required]}),
-      restartType: new FormControl<RestartType>(RestartType.Never, { nonNullable: true, validators: [Validators.required]}),
+      restartType: new FormControl<RestartType>(RestartType.Always, { nonNullable: true, validators: [Validators.required]}),
       expectedExitCode: new FormControl<number>(0, { nonNullable: true, validators: [Validators.required]}),
       startupTime: new FormControl<number>(5,  { nonNullable: true, validators: [Validators.required]}),
       restartRetryCount: new FormControl<number>(1,  { nonNullable: true, validators: [Validators.required, Validators.min(1), Validators.max(2000)]}),
       exitSignal: new FormControl<ExitSignalType>(ExitSignalType.Sigint,  { nonNullable: true, validators: [Validators.required]}),
       gracefulStopTime: new FormControl<number>(5,  { nonNullable: true, validators: [Validators.required]}),
-      environement: new FormArray<FormControl<EnvValue>>([new FormControl<EnvValue>({key: "coucou", value : "coucou"}, { nonNullable: true, validators: [Validators.required]})]),
+      environement: new FormArray<FormControl<EnvValue>>([new FormControl<EnvValue>({key: "", value : ""}, { nonNullable: true, })]),
       umask: new FormControl<string>("022",  { nonNullable: true, validators: [Validators.required]}),
-      etat: new FormControl<ProcessEtat>(ProcessEtat.Run , { nonNullable: true, validators: [Validators.required]})
+      etat: new FormControl<ProcessEtat>({ value : ProcessEtat.Run, disabled: true} , { nonNullable: true, validators: [Validators.required]})
     }
   );
   constructor( 
@@ -56,5 +56,12 @@ export class CreateEditProcessDialogComponent {
       }
     restartValue(){
       return [RestartType.Always,  RestartType.Never, RestartType.OnFailure,];
+    }
+    exitSignals(){
+      return [ExitSignalType.Sigint, ExitSignalType.Sigterm, ExitSignalType.Sigquit, ExitSignalType.Sigkill];
+    }
+
+    getReturnData() {
+      return this.group.value;
     }
 }

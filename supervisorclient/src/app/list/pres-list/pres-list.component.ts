@@ -24,6 +24,7 @@ export class PresListComponent implements OnInit {
   addProcess() {
     console.log("ADDING ")
     this.dialog.open(CreateEditProcessDialogComponent, {
+      width: '500px',
       data : {
         process: undefined,
         edit : true,
@@ -35,6 +36,7 @@ export class PresListComponent implements OnInit {
   editProcess(process: GroupProcess) {
     console.log("EDITING")
     this.dialog.open(CreateEditProcessDialogComponent, {
+      width: '500px',
       data : {
         process,
         edit: false,

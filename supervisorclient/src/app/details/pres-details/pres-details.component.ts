@@ -25,9 +25,9 @@ export class PresDetailsComponent implements OnChanges{
     constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.outLogs)
     if("groupProcess" in changes && this.groupProcess?.groupProcess?.name){
       this.getOutlog()
-      console.log(this.groupProcess)
     }
   }
 

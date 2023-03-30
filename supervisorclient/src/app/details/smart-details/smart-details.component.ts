@@ -42,7 +42,6 @@ export class SmartDetailsComponent implements OnInit, OnDestroy {
   }
 
   getOulog(processName : string){
-    console.log(processName)
     this.supervisorService.outLogs(processName)
   }
 

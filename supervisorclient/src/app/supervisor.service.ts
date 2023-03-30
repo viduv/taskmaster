@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 import {GroupProcess, GroupProcessDetails, TaskmasterService} from './openapi';
 
 @Injectable({
@@ -9,8 +9,8 @@ export class SupervisorService {
 
   groupProcessSubject : ReplaySubject<GroupProcessDetails> = new ReplaySubject<GroupProcessDetails>;
   listProcessSubject : ReplaySubject<Array<GroupProcess>> = new ReplaySubject<Array<GroupProcess>>;
-  outLogsSubject : ReplaySubject<string> = new ReplaySubject<string>;
-  errorLogsSubject :ReplaySubject<string> = new ReplaySubject<string>;
+  outLogsSubject : BehaviorSubject<string> = new BehaviorSubject<string>("");
+  errorLogsSubject :BehaviorSubject<string> = new BehaviorSubject<string>("");
 
 
   constructor(private taskmasterService: TaskmasterService) {
@@ -48,7 +48,6 @@ export class SupervisorService {
 
   outLogs( processName : string): void {
     this.taskmasterService.processLog(processName).subscribe(value => {
-      console.log(value)
       this.outLogsSubject.next(value)})
   }
 
@@ -66,5 +65,10 @@ export class SupervisorService {
     if(name !== undefined){
       this.taskmasterService.deleteProcess(name).subscribe(() => this.listProcess())
     }
+  }
+
+  clearprocessLogs(): void {
+    this.outLogsSubject.next("");
+    this.errorLogsSubject.next("");
   }
 }
