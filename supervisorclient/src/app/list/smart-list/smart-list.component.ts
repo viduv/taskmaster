@@ -24,7 +24,6 @@ export class SmartListComponent implements OnInit {
   }
 
   editProcess(process: GroupProcess) {
-    console.log(process);
   }
 
   deleteProcess(process: GroupProcess) {

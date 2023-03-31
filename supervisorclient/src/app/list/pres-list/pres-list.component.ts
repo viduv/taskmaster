@@ -20,11 +20,9 @@ export class PresListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.processes)
   }
 
   addProcess() {
-    console.log("ADDING ")
     this.dialog.open(CreateEditProcessDialogComponent, {
       width: '70%',
       height: '80%',
@@ -39,7 +37,6 @@ export class PresListComponent implements OnInit {
   }
 
   editProcess(process: GroupProcess) {
-    console.log("EDITING")
     this.dialog.open(CreateEditProcessDialogComponent, {
       width: '70%',
       height: '80%',
