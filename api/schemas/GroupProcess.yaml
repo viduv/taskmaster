@@ -48,5 +48,4 @@ GroupProcess:
       - exitSignal
       - gracefulStopTime
       - environement
-      - umask
       - etat

@@ -17,7 +17,7 @@ interface GroupProcessForm {
   exitSignal: FormControl<ExitSignalType>,
   gracefulStopTime: FormControl<number>,
   environement: FormArray<FormGroup<EnvValueForm>>,
-  umask: FormControl<string>,
+  umask: FormControl<string | undefined>,
   etat: FormControl<ProcessEtat>,
   stdout: FormControl<string | undefined>,
   stderr: FormControl<string | undefined>,
@@ -42,7 +42,7 @@ export class CreateEditProcessDialogComponent implements OnInit {
       name: new FormControl<string>("", {nonNullable: true, validators: [Validators.required]}),
       command: new FormControl<string>("", {nonNullable: true, validators: [Validators.required]}),
       nbInstance: new FormControl<number>(1, {nonNullable: true, validators: [Validators.required]}),
-      startAtLaunch: new FormControl<boolean>(true, {nonNullable: true, validators: [Validators.required]}),
+      startAtLaunch: new FormControl<boolean>(true, {nonNullable: true,}),
       restartType: new FormControl<RestartType>(RestartType.Always, {
         nonNullable: true,
         validators: [Validators.required]
@@ -51,7 +51,7 @@ export class CreateEditProcessDialogComponent implements OnInit {
       startupTime: new FormControl<number>(5, {nonNullable: true, validators: [Validators.required]}),
       restartRetryCount: new FormControl<number>(1, {
         nonNullable: true,
-        validators: [Validators.required, Validators.min(1), Validators.max(2000)]
+        validators: [Validators.required, Validators.min(0), Validators.max(2000)]
       }),
       exitSignal: new FormControl<ExitSignalType>(ExitSignalType.Sigint, {
         nonNullable: true,
@@ -59,7 +59,7 @@ export class CreateEditProcessDialogComponent implements OnInit {
       }),
       gracefulStopTime: new FormControl<number>(5, {nonNullable: true, validators: [Validators.required]}),
       environement: new FormArray<FormGroup<EnvValueForm>>([]),
-      umask: new FormControl<string>("022", {nonNullable: true, validators: [Validators.required]}),
+      umask: new FormControl<string | undefined>("022", {nonNullable: true}),
       etat: new FormControl<ProcessEtat>({value: ProcessEtat.Run, disabled: true}, {
         nonNullable: true,
         validators: [Validators.required]

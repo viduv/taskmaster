@@ -23,7 +23,7 @@
       <mat-error *ngIf="group.get('nbInstance')?.hasError('required')">
         Ne dois pas etre vide </mat-error>
     </mat-form-field>
-    <mat-slide-toggle required color="accent" formControlName="startAtLaunch">
+    <mat-slide-toggle color="accent" formControlName="startAtLaunch">
       Start at launch
     </mat-slide-toggle>
     <mat-form-field>
@@ -53,7 +53,7 @@
       <mat-error *ngIf="group.get('restartRetryCount')?.hasError('required')">
         Ne dois pas etre vide </mat-error>
         <mat-error *ngIf="group.get('restartRetryCount')?.hasError('min')">
-          La valeur doit etre superieur a 0 </mat-error>
+          La valeur doit etre superieur ou egal a 0 </mat-error>
           <mat-error *ngIf="group.get('restartRetryCount')?.hasError('max')">
             La valeur doit etre inferieur a 2000 </mat-error>
     </mat-form-field>
@@ -74,7 +74,7 @@
     </mat-form-field>
     <mat-form-field appearance="fill" class="box">
       <mat-label>Umask</mat-label>
-      <input matInput placeholder="umask" formControlName="umask" required>
+      <input matInput placeholder="umask" formControlName="umask">
       <mat-error *ngIf="group.get('umask')?.hasError('required')">
         Ne dois pas etre vide </mat-error>
     </mat-form-field>
