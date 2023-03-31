@@ -1,5 +1,8 @@
 <div class="details-container">
   <div class="left-container">
+    <div>
+      <h2>{{groupProcess.groupProcess?.name}}</h2>
+    </div>
     <div class="process-table">
     <table *ngIf="groupProcess.processes; else spinner" mat-table [dataSource]="groupProcess.processes" class="mat-elevation-z8">
         <!-- Position Column -->    

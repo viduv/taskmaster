@@ -59,7 +59,7 @@ export class CreateEditProcessDialogComponent implements OnInit {
       }),
       gracefulStopTime: new FormControl<number>(5, {nonNullable: true, validators: [Validators.required]}),
       environement: new FormArray<FormGroup<EnvValueForm>>([]),
-      umask: new FormControl<string | undefined>("022", {nonNullable: true}),
+      umask: new FormControl<string | undefined>("022", {nonNullable: true, validators: [Validators.required]}),
       etat: new FormControl<ProcessEtat>({value: ProcessEtat.Run, disabled: true}, {
         nonNullable: true,
         validators: [Validators.required]
