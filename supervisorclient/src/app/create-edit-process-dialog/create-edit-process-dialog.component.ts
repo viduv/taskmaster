@@ -19,9 +19,9 @@ interface GroupProcessForm {
   environement: FormArray<FormGroup<EnvValueForm>>,
   umask: FormControl<string>,
   etat: FormControl<ProcessEtat>,
-  stdout: FormControl<string | null>,
-  stderr: FormControl<string | null>,
-  workingdir: FormControl<string | null>
+  stdout: FormControl<string | undefined>,
+  stderr: FormControl<string | undefined>,
+  workingdir: FormControl<string | undefined>
 }
 
 export interface EnvValueForm {
@@ -64,9 +64,9 @@ export class CreateEditProcessDialogComponent implements OnInit {
         nonNullable: true,
         validators: [Validators.required]
       }),
-      stdout: new FormControl<string>(""),
-      stderr: new FormControl<string>(""),
-      workingdir: new FormControl<string>(""),
+      stdout: new FormControl<string | undefined>("", {nonNullable: true}),
+      stderr: new FormControl<string | undefined>("", {nonNullable: true}),
+      workingdir: new FormControl<string | undefined>("", {nonNullable: true}),
     }
   );
 

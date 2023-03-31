@@ -41,7 +41,10 @@ public interface ProcessMapper {
                 .gracefulStopTime(domain.getConfiguration().getGracefulStopTime())
                 .environement(env)
                 .etat(etat)
-                .umask(domain.getConfiguration().getUmask());
+                .umask(domain.getConfiguration().getUmask())
+                .stdout(domain.getConfiguration().getStdoutFile())
+                .stderr(domain.getConfiguration().getStderrFile())
+                .workingdir(domain.getConfiguration().getFolder());
     }
 
     default fr.fpage.backend.openapi.model.GroupProcessDetails domainToApiDetail(GroupProcess domain) {
@@ -57,9 +60,12 @@ public interface ProcessMapper {
 
     ExitSignalType exitSignalDomainToApi(fr.fpage.taskmaster.model.ExitSignalType domain);
 
-    @Mapping(target = "pid", expression = "java((int)domain.getProcess().pid())")
+    @Mapping(target = "pid", expression = "java((int)domain.getMainRunnable().getJavaProcess().pid())")
     fr.fpage.backend.openapi.model.Process domainProcessToOpenApi(fr.fpage.taskmaster.domain.Process domain);
 
     @Mapping(target = "cmd", source = "command")
-    ProcessConfiguration GroupProcessApiToGroupProcessConfiguration(fr.fpage.backend.openapi.model.GroupProcess groupProcess);
+    @Mapping(target = "stdoutFile", source = "stdout")
+    @Mapping(target = "stderrFile", source = "stderr")
+    @Mapping(target = "folder", source = "workingdir")
+    ProcessConfiguration groupProcessApiToGroupProcessConfiguration(fr.fpage.backend.openapi.model.GroupProcess groupProcess);
 }

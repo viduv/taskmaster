@@ -4,6 +4,7 @@ import fr.fpage.backend.openapi.model.ProcessEtat;
 import fr.fpage.taskmaster.application.services.JNAService;
 import fr.fpage.taskmaster.model.ProcessConfiguration;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,7 +19,8 @@ public class GroupProcess {
     private final List<Process> processes = new ArrayList<>();
 
     @Getter
-    private final ProcessConfiguration configuration;
+    @Setter
+    private ProcessConfiguration configuration;
 
     private File stdoutFile;
     private File stderrFile;
@@ -28,7 +30,6 @@ public class GroupProcess {
     public GroupProcess(ProcessConfiguration configuration, JNAService jnaService) throws IOException {
         this.configuration = configuration;
         this.jnaService = jnaService;
-        System.out.println(configuration.getStdoutFile());
         if (configuration.getStdoutFile() != null) {
             File f = new File(configuration.getStdoutFile());
             f.createNewFile();
@@ -57,7 +58,7 @@ public class GroupProcess {
     public void stop() {
         this.processes.forEach(process -> {
             if (process.getEtat().equals(ProcessEtat.RUN))
-                process.stopProcess();
+                process.stop();
         });
     }
 
@@ -93,5 +94,30 @@ public class GroupProcess {
         } catch (FileNotFoundException e) {
             return "";
         }
+    }
+
+    public void changeNbInstance(int nbInstance, JNAService jnaService) {
+        while (this.processes.size() > nbInstance) {
+            this.processes.remove(this.processes.size() - 1).stop();
+        }
+        while (this.processes.size() < nbInstance) {
+            Process p = new Process(this.configuration, jnaService);
+            this.processes.add(p);
+            if (this.configuration.isStartAtLaunch())
+                p.start();
+        }
+
+    }
+
+    public void changeUmask(String umask) {
+        this.processes.forEach(process -> process.setUmask(umask));
+    }
+
+    public void restartOutputThread() {
+        this.processes.forEach(process -> process.getMainRunnable().restartOutputThread());
+    }
+
+    public void restartErrThread() {
+        this.processes.forEach(process -> process.getMainRunnable().restartErrThread());
     }
 }

@@ -154,7 +154,7 @@ public class WebDelegate implements TaskmasterApi {
      */
     @Override
     public ResponseEntity<Void> createProcess(GroupProcess groupProcess) {
-        this.processService.createProcess(ProcessMapper.INSTANCE.GroupProcessApiToGroupProcessConfiguration(groupProcess));
+        this.processService.createProcess(ProcessMapper.INSTANCE.groupProcessApiToGroupProcessConfiguration(groupProcess));
         return ResponseEntity.ok().build();
     }
 
@@ -168,6 +168,11 @@ public class WebDelegate implements TaskmasterApi {
      */
     @Override
     public ResponseEntity<Void> editProcess(String name, GroupProcess groupProcess) {
-        return TaskmasterApi.super.editProcess(name, groupProcess);
+        try {
+            this.processService.editProcess(name, ProcessMapper.INSTANCE.groupProcessApiToGroupProcessConfiguration(groupProcess));
+            return ResponseEntity.ok().build();
+        } catch (NullPointerException ignored) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -1,10 +1,9 @@
 package fr.fpage.taskmaster.application.services;
 
-import fr.fpage.backend.openapi.model.GroupProcessDetails;
 import fr.fpage.taskmaster.domain.GroupProcess;
 import fr.fpage.taskmaster.model.Configuration;
 import fr.fpage.taskmaster.model.ProcessConfiguration;
-import org.springframework.http.ResponseEntity;
+import fr.fpage.taskmaster.util.MapUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -66,8 +65,35 @@ public class ProcessService {
     public void createProcess(ProcessConfiguration groupProcess) {
         try {
             this.processMap.put(groupProcess.getName(), new GroupProcess(groupProcess, this.jnaService));
-            this.processMap.get(groupProcess.getName()).start();
+            if (groupProcess.isStartAtLaunch())
+                this.processMap.get(groupProcess.getName()).start();
         } catch (IOException e) {
+        }
+    }
+
+    public void editProcess(String name, ProcessConfiguration groupProcess) throws NullPointerException {
+        GroupProcess oldGp = this.getProcessGroup(name);
+        ProcessConfiguration oldConfig = oldGp.getConfiguration();
+        oldGp.setConfiguration(groupProcess);
+        if (!oldConfig.getCmd().equals(groupProcess.getCmd())
+                || !oldConfig.getFolder().equals(groupProcess.getFolder())
+                || !MapUtils.deepCompareHashMap(oldConfig.getEnv(), groupProcess.getEnv())) {
+            this.deleteProcess(name);
+            this.createProcess(groupProcess);
+        }
+        if (!oldConfig.getName().equals(groupProcess.getName())) {
+            oldConfig.setName(groupProcess.getName());
+            this.processMap.remove(name);
+            this.processMap.put(groupProcess.getName(), oldGp);
+        }
+        if (!oldConfig.getUmask().equals(groupProcess.getUmask()))
+            oldGp.changeUmask(groupProcess.getUmask());
+        if (!oldConfig.getStdoutFile().equals(groupProcess.getStdoutFile()))
+            oldGp.restartOutputThread();
+        if (!oldConfig.getStderrFile().equals(groupProcess.getStderrFile()))
+            oldGp.restartErrThread();
+        if (oldConfig.getNbInstance() != groupProcess.getNbInstance()) {
+            oldGp.changeNbInstance(groupProcess.getNbInstance(), this.jnaService);
         }
     }
 }
