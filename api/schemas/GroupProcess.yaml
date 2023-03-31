@@ -50,6 +50,3 @@ GroupProcess:
       - environement
       - umask
       - etat
-      - stdout
-      - stderr
-      - workingdir

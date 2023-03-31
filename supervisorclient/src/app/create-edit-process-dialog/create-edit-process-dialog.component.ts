@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ExitSignalType, GroupProcess, ProcessEtat} from '../openapi';
 import {RestartType} from '../openapi/model/restartType';
@@ -19,9 +19,9 @@ interface GroupProcessForm {
   environement: FormArray<FormGroup<EnvValueForm>>,
   umask: FormControl<string>,
   etat: FormControl<ProcessEtat>,
-  stdout: FormControl<string>,
-  stderr: FormControl<string>,
-  workingdir: FormControl<string>
+  stdout: FormControl<string | null>,
+  stderr: FormControl<string | null>,
+  workingdir: FormControl<string | null>
 }
 
 export interface EnvValueForm {
@@ -64,9 +64,9 @@ export class CreateEditProcessDialogComponent implements OnInit {
         nonNullable: true,
         validators: [Validators.required]
       }),
-      stdout: new FormControl<string>("", {nonNullable: true, }),
-      stderr: new FormControl<string>("", {nonNullable: true, }),
-      workingdir: new FormControl<string>("", {nonNullable: true, }),
+      stdout: new FormControl<string>(""),
+      stderr: new FormControl<string>(""),
+      workingdir: new FormControl<string>(""),
     }
   );
 
@@ -79,8 +79,11 @@ export class CreateEditProcessDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.data.process) {
+    if (this.data?.process) {
       this.group.patchValue(this.data.process);
+    }
+    if(this.data?.forbiddenName?.length > 0){
+      this.group.controls.name.setValidators([Validators.required, this.notInArrayValidator(this.data.forbiddenName)]);
     }
   }
 
@@ -114,5 +117,15 @@ export class CreateEditProcessDialogComponent implements OnInit {
 
   deleteEnvForm(index: number) {
     this.formEnvironement.removeAt(index)
+  }
+
+  notInArrayValidator(array: string[]): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (array.indexOf(value) !== -1) {
+        return { notInArray: true };
+      }
+      return null;
+    };
   }
 }

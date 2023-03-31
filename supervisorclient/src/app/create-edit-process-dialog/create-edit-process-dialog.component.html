@@ -8,6 +8,8 @@
       <input matInput placeholder="Name" formControlName="name" required>
       <mat-error *ngIf="group.get('name')?.hasError('required')">
         Ne dois pas etre vide </mat-error>
+        <mat-error *ngIf="group.get('name')?.hasError('notInArray')">
+          Un processus avec ce nom est deja present </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="box">
       <mat-label>Commande</mat-label>
@@ -46,9 +48,9 @@
 
     </mat-form-field>
     <mat-form-field appearance="fill" class="box">
-      <mat-label>Nombre de tentavide de redemarrage</mat-label>
+      <mat-label>Nombre de tentative de redemarrage</mat-label>
       <input matInput placeholder="restartRetryCount" formControlName="restartRetryCount" required>
-      <mat-error *ngIf="group.get('name')?.hasError('required')">
+      <mat-error *ngIf="group.get('restartRetryCount')?.hasError('required')">
         Ne dois pas etre vide </mat-error>
         <mat-error *ngIf="group.get('restartRetryCount')?.hasError('min')">
           La valeur doit etre superieur a 0 </mat-error>
@@ -67,22 +69,28 @@
     <mat-form-field appearance="fill" class="box">
       <mat-label>Temps d'arret</mat-label>
       <input matInput placeholder="gracefulStopTime" formControlName="gracefulStopTime" required>
+      <mat-error *ngIf="group.get('gracefulStopTime')?.hasError('required')">
+        Ne dois pas etre vide </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="box">
       <mat-label>Umask</mat-label>
       <input matInput placeholder="umask" formControlName="umask" required>
+      <mat-error *ngIf="group.get('umask')?.hasError('required')">
+        Ne dois pas etre vide </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="box">
       <mat-label>Chemin du fichier de la sortie standard</mat-label>
-      <input matInput placeholder="stdout" formControlName="stdout" required>
+      <input matInput placeholder="stdout" formControlName="stdout">
+      <mat-error *ngIf="group.get('stdout')?.hasError('required')">
+        Ne dois pas etre vide </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="box">
       <mat-label>Chemin du fichier de la sortie d'erreur</mat-label>
-      <input matInput placeholder="stderr" formControlName="stderr" required>
+      <input matInput placeholder="stderr" formControlName="stderr">
     </mat-form-field>
     <mat-form-field appearance="fill" class="box">
       <mat-label>Repertoire de travail courant </mat-label>
-      <input matInput placeholder="workingdir" formControlName="workingdir" required>
+      <input matInput placeholder="workingdir" formControlName="workingdir">
     </mat-form-field>
     <div formArrayName="environement">
       <div class="env-title">

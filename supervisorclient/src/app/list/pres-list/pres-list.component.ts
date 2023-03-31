@@ -31,6 +31,7 @@ export class PresListComponent implements OnInit {
       data: {
         process: undefined,
         edit: false,
+        forbiddenName: this.processes?.map(p => p.name),
       },
       enterAnimationDuration: '250ms',
       exitAnimationDuration: '250ms',
@@ -45,6 +46,7 @@ export class PresListComponent implements OnInit {
       data: {
         process,
         edit: true,
+        forbiddenName: this.processes?.map(p => p.name).filter(p => p !== process.name),
       },
       enterAnimationDuration: '250ms',
       exitAnimationDuration: '250ms',
