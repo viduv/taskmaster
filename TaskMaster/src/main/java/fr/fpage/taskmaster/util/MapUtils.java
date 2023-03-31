@@ -5,6 +5,10 @@ import java.util.HashMap;
 public class MapUtils {
 
     public static boolean deepCompareHashMap(HashMap<String, String> map1, HashMap<String, String> map2) {
+        if (map1 == null && map2 == null)
+            return true;
+        if (map1 == null || map2 == null)
+            return false;
         if (map1.size() != map2.size()) {
             return false;
         }

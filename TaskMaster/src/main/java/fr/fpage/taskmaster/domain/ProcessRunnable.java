@@ -18,6 +18,7 @@ public class ProcessRunnable implements Runnable {
     private Thread outputThread;
     private Thread errorThread;
     private boolean stop = false;
+    private int restartCount = 0;
 
     public ProcessRunnable(Process process) {
         this.process = process;
@@ -30,9 +31,15 @@ public class ProcessRunnable implements Runnable {
         do {
             this.process.setEtat(ProcessEtat.RUN);
             processError = this.runProcess();
+            if (processError)
+                restartCount++;
             this.process.setEtat(ProcessEtat.STOP);
         }
-        while ((this.process.getConfiguration().getRestartType().equals(RestartType.ALWAYS) || this.process.getConfiguration().getRestartType().equals(RestartType.ON_FAILURE) && processError) && !this.stop);
+        while ((this.process.getConfiguration().getRestartType().equals(RestartType.ALWAYS)
+                || this.process.getConfiguration().getRestartType().equals(RestartType.ON_FAILURE)
+                && processError
+                && restartCount < this.process.getConfiguration().getRestartRetryCount())
+                && !this.stop);
     }
 
     private boolean runProcess() {
@@ -46,6 +53,7 @@ public class ProcessRunnable implements Runnable {
         try {
             this.javaProcess = processBuilder.start();
         } catch (IOException ignored) {
+            ignored.printStackTrace();
         }
         this.startOutputThread();
         this.startErrThread();

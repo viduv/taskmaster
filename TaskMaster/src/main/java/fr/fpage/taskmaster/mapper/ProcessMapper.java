@@ -12,7 +12,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ProcessMapper {
@@ -60,12 +62,19 @@ public interface ProcessMapper {
 
     ExitSignalType exitSignalDomainToApi(fr.fpage.taskmaster.model.ExitSignalType domain);
 
-    @Mapping(target = "pid", expression = "java((int)domain.getMainRunnable().getJavaProcess().pid())")
+    @Mapping(target = "pid", expression = "java(domain.getMainRunnable() == null ? 0:(int)domain.getMainRunnable().getJavaProcess().pid())")
     fr.fpage.backend.openapi.model.Process domainProcessToOpenApi(fr.fpage.taskmaster.domain.Process domain);
 
     @Mapping(target = "cmd", source = "command")
     @Mapping(target = "stdoutFile", source = "stdout")
     @Mapping(target = "stderrFile", source = "stderr")
     @Mapping(target = "folder", source = "workingdir")
+    @Mapping(target = "env", source = "environement")
     ProcessConfiguration groupProcessApiToGroupProcessConfiguration(fr.fpage.backend.openapi.model.GroupProcess groupProcess);
+
+    default HashMap<String, String> envValueToEnvMap(List<EnvValue> env) {
+        HashMap<String, String> map = new HashMap<>();
+        env.forEach(envValue -> map.put(envValue.getKey(), envValue.getValue()));
+        return map;
+    }
 }

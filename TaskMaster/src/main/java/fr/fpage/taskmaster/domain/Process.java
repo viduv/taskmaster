@@ -28,11 +28,15 @@ public class Process {
         this.jnaService = jnaService;
     }
 
-    public void start() {
+    public void start() throws InterruptedException {
         Logger.getGlobal().log(Level.INFO, "Start process thread " + this.configuration.getName());
         this.mainRunnable = new ProcessRunnable(this);
         this.processThread = new Thread(this.mainRunnable);
         this.processThread.start();
+
+        while (this.mainRunnable.getJavaProcess() == null) {
+            Thread.sleep(100);
+        }
     }
 
     public void stop() {

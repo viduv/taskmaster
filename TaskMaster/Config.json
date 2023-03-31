@@ -16,7 +16,7 @@
       "cmd": "yes",
       "expectedExitCode": 130,
       "exitSignal": "SIGINT",
-      "nbInstance": 3,
+      "nbInstance": 5,
       "stdoutFile": "/tmp/yes.log",
       "stderrFile": "/tmp/yesErr.log",
       "restartType": "ALWAYS",

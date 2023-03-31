@@ -1,31 +1,34 @@
 package fr.fpage.taskmaster;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.fpage.taskmaster.application.in.console.ConsoleDelegate;
 import fr.fpage.taskmaster.application.services.ProcessService;
-import fr.fpage.taskmaster.model.Configuration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
+import java.io.IOException;
+import java.util.logging.Logger;
 
 @Component
 public class TaskmasterApplicationRunner implements ApplicationRunner {
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-    private final ProcessService processService;
+    private final ConsoleDelegate consoleDelegate;
+    private final Logger logger;
 
-    public TaskmasterApplicationRunner(ProcessService processService) {
-        this.processService = processService;
+    public TaskmasterApplicationRunner(ConsoleDelegate consoleDelegate) {
+        this.consoleDelegate = consoleDelegate;
+        this.logger = Logger.getLogger("Runner");
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         if (args.getSourceArgs().length == 1) {
-            File f = new File(args.getSourceArgs()[0]);
-            Configuration conf = objectMapper.readValue(f, Configuration.class);
-            processService.loadProcess(conf);
-        } else
-            System.out.println("Un yaml gros !");
+            try {
+                this.consoleDelegate.loadConfig(args.getSourceArgs()[0]);
+            } catch (IOException e) {
+                this.logger.info("Le fichier n'existe pas");
+            }
+        } else {
+            this.logger.info("Ajoutez une configuration json");
+        }
     }
 }

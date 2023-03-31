@@ -17,7 +17,7 @@ interface GroupProcessForm {
   exitSignal: FormControl<ExitSignalType>,
   gracefulStopTime: FormControl<number>,
   environement: FormArray<FormGroup<EnvValueForm>>,
-  umask: FormControl<string | undefined>,
+  umask: FormControl<string>,
   etat: FormControl<ProcessEtat>,
   stdout: FormControl<string | undefined>,
   stderr: FormControl<string | undefined>,
@@ -59,14 +59,14 @@ export class CreateEditProcessDialogComponent implements OnInit {
       }),
       gracefulStopTime: new FormControl<number>(5, {nonNullable: true, validators: [Validators.required]}),
       environement: new FormArray<FormGroup<EnvValueForm>>([]),
-      umask: new FormControl<string | undefined>("022", {nonNullable: true, validators: [Validators.required]}),
+      umask: new FormControl<string>("022", {nonNullable: true, validators: [Validators.required]}),
       etat: new FormControl<ProcessEtat>({value: ProcessEtat.Run, disabled: true}, {
         nonNullable: true,
         validators: [Validators.required]
       }),
-      stdout: new FormControl<string | undefined>("", {nonNullable: true}),
-      stderr: new FormControl<string | undefined>("", {nonNullable: true}),
-      workingdir: new FormControl<string | undefined>("", {nonNullable: true}),
+      stdout: new FormControl<string | undefined>(undefined, {nonNullable: true}),
+      stderr: new FormControl<string | undefined>(undefined, {nonNullable: true}),
+      workingdir: new FormControl<string | undefined>(undefined, {nonNullable: true}),
     }
   );
 
@@ -82,7 +82,7 @@ export class CreateEditProcessDialogComponent implements OnInit {
     if (this.data?.process) {
       this.group.patchValue(this.data.process);
     }
-    if(this.data?.forbiddenName?.length > 0){
+    if (this.data?.forbiddenName?.length > 0) {
       this.group.controls.name.setValidators([Validators.required, this.notInArrayValidator(this.data.forbiddenName)]);
     }
   }
@@ -123,7 +123,7 @@ export class CreateEditProcessDialogComponent implements OnInit {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value;
       if (array.indexOf(value) !== -1) {
-        return { notInArray: true };
+        return {notInArray: true};
       }
       return null;
     };

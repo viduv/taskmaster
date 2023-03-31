@@ -41,6 +41,7 @@ public class WebDelegate implements TaskmasterApi {
         try {
             return ResponseEntity.ok(ProcessMapper.INSTANCE.domainToApiDetail(this.processService.getProcessGroup(name)));
         } catch (NullPointerException e) {
+            e.printStackTrace();
             return ResponseEntity.notFound().build();
         }
     }
@@ -172,6 +173,7 @@ public class WebDelegate implements TaskmasterApi {
             this.processService.editProcess(name, ProcessMapper.INSTANCE.groupProcessApiToGroupProcessConfiguration(groupProcess));
             return ResponseEntity.ok().build();
         } catch (NullPointerException ignored) {
+            ignored.printStackTrace();
             return ResponseEntity.notFound().build();
         }
     }

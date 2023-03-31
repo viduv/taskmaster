@@ -25,7 +25,13 @@ public class ProcessService {
     }
 
     public void loadProcess(Configuration configuration) {
-        configuration.getProcessConfiguration().stream().map(conf -> {
+        configuration.getProcessConfiguration().forEach(configuration1 -> {
+            if (this.processMap.containsKey(configuration1.getName()))
+                this.editProcess(configuration1.getName(), configuration1);
+            else
+                this.createProcess(configuration1);
+        });
+/*        configuration.getProcessConfiguration().stream().map(conf -> {
             try {
                 return new GroupProcess(conf, this.jnaService);
             } catch (IOException e) {
@@ -33,9 +39,10 @@ public class ProcessService {
             }
         }).toList().forEach(process -> {
             this.processMap.put(process.getConfiguration().getName(), process);
-            if (process.getConfiguration().isStartAtLaunch())
+            if (process.getConfiguration().isStartAtLaunch()) {
                 process.start();
-        });
+            }
+        });*/
     }
 
     public void stopProcess(String programName) throws NullPointerException {
@@ -75,9 +82,11 @@ public class ProcessService {
         GroupProcess oldGp = this.getProcessGroup(name);
         ProcessConfiguration oldConfig = oldGp.getConfiguration();
         oldGp.setConfiguration(groupProcess);
+        System.out.println(groupProcess);
         if (!oldConfig.getCmd().equals(groupProcess.getCmd())
-                || !oldConfig.getFolder().equals(groupProcess.getFolder())
+                || (oldConfig.getFolder() != null && !oldConfig.getFolder().equals(groupProcess.getFolder()))
                 || !MapUtils.deepCompareHashMap(oldConfig.getEnv(), groupProcess.getEnv())) {
+            System.out.println("recreate process");
             this.deleteProcess(name);
             this.createProcess(groupProcess);
         }
@@ -86,14 +95,18 @@ public class ProcessService {
             this.processMap.remove(name);
             this.processMap.put(groupProcess.getName(), oldGp);
         }
-        if (!oldConfig.getUmask().equals(groupProcess.getUmask()))
+        if (oldConfig.getUmask() != null && !oldConfig.getUmask().equals(groupProcess.getUmask()))
             oldGp.changeUmask(groupProcess.getUmask());
-        if (!oldConfig.getStdoutFile().equals(groupProcess.getStdoutFile()))
+        if (oldConfig.getStdoutFile() != null && !oldConfig.getStdoutFile().equals(groupProcess.getStdoutFile()))
             oldGp.restartOutputThread();
-        if (!oldConfig.getStderrFile().equals(groupProcess.getStderrFile()))
+        if (oldConfig.getStderrFile() != null && !oldConfig.getStderrFile().equals(groupProcess.getStderrFile()))
             oldGp.restartErrThread();
         if (oldConfig.getNbInstance() != groupProcess.getNbInstance()) {
             oldGp.changeNbInstance(groupProcess.getNbInstance(), this.jnaService);
         }
+    }
+
+    public void stopAll() {
+        this.processMap.values().forEach(groupProcess -> this.stopProcess(groupProcess.getConfiguration().getName()));
     }
 }

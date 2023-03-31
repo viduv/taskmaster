@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {RouterModule} from '@angular/router';
 import {PresListComponent, SmartListComponent} from './list';
-import {PresEditComponent, SmartEditComponent} from './edit';
 import {ApiModule} from './openapi';
 import {MatCardModule} from '@angular/material/card';
 import {HttpClientModule} from '@angular/common/http';
@@ -35,8 +34,6 @@ import {FormEnvComponent} from "./create-edit-process-dialog/form-env/form-env.c
     AppComponent,
     SmartListComponent,
     PresListComponent,
-    SmartEditComponent,
-    PresEditComponent,
     SmartDetailsComponent,
     PresDetailsComponent,
     CreateEditProcessDialogComponent,

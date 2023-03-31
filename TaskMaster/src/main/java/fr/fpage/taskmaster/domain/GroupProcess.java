@@ -7,13 +7,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class GroupProcess {
+
+    private static final int LOG_LINES = 500;
 
     @Getter
     private final List<Process> processes = new ArrayList<>();
@@ -30,70 +31,100 @@ public class GroupProcess {
     public GroupProcess(ProcessConfiguration configuration, JNAService jnaService) throws IOException {
         this.configuration = configuration;
         this.jnaService = jnaService;
-        if (configuration.getStdoutFile() != null) {
-            File f = new File(configuration.getStdoutFile());
-            f.createNewFile();
-            this.stdoutFile = f;
+
+        this.stdoutFile = createLogFile(configuration.getStdoutFile());
+        this.stderrFile = createLogFile(configuration.getStderrFile());
+        for (int i = 0; i < this.configuration.getNbInstance(); i++) {
+            this.processes.add(new Process(this.configuration, this.jnaService));
         }
-        if (configuration.getStderrFile() != null) {
-            File f = new File(configuration.getStderrFile());
+    }
+
+    private File createLogFile(String filePath) throws IOException {
+        if (filePath != null) {
+            File f = new File(filePath);
             f.createNewFile();
-            this.stderrFile = f;
+            return f;
         }
+        return null;
     }
 
     public void start() {
-        if (this.processes.stream().noneMatch(process -> process.getEtat().equals(ProcessEtat.RUN))) {
-            this.processes.clear();
-            for (int i = 0; i < this.configuration.getNbInstance(); i++) {
-                this.processes.add(new Process(this.configuration, this.jnaService));
+        this.processes.stream().filter(process -> process.getEtat().equals(ProcessEtat.STOP)).toList().forEach(process -> {
+            this.processes.remove(process);
+            Process p = new Process(this.configuration, this.jnaService);
+            this.processes.add(p);
+            try {
+                p.start();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-            this.processes.forEach(process -> {
-                if (process.getEtat().equals(ProcessEtat.STOP))
-                    process.start();
-            });
-        }
-    }
-
-    public void stop() {
-        this.processes.forEach(process -> {
-            if (process.getEtat().equals(ProcessEtat.RUN))
-                process.stop();
         });
     }
 
-    public String getStdoutLogs() {
-        Scanner scanner;
-        try {
-            scanner = new Scanner(this.stdoutFile);
-            StringBuilder stringBuilder = new StringBuilder();
+    public void stop() {
+        this.processes.stream().filter(process -> process.getEtat().equals(ProcessEtat.RUN)).forEach(Process::stop);
+    }
 
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                stringBuilder.append(line).append("\n");
+    public String getStdoutLogs() {
+        try (RandomAccessFile reader = new RandomAccessFile(this.stdoutFile, "r")) {
+            long length = this.stdoutFile.length();
+            long pos = length - 1;
+            int count = 0;
+            StringBuilder sbLine = new StringBuilder();
+            StringBuilder sbLogs = new StringBuilder();
+
+            while (pos >= 0 && count < LOG_LINES) {
+                reader.seek(pos);
+                char c = (char) reader.readByte();
+
+                if (c == '\n') {
+                    sbLogs.append(sbLine).append('\n');
+                    sbLine.setLength(0);
+                    count++;
+                } else {
+                    sbLine.append(c);
+                }
+                pos--;
             }
-            scanner.close();
-            return stringBuilder.toString();
-        } catch (FileNotFoundException e) {
-            return "";
+
+            if (sbLine.length() > 0) {
+                sbLogs.append(sbLine);
+            }
+            return sbLogs.reverse().toString();
+        } catch (IOException ignored) {
         }
+        return null;
     }
 
     public String getStderrLogs() {
-        Scanner scanner;
-        try {
-            scanner = new Scanner(this.stderrFile);
-            StringBuilder stringBuilder = new StringBuilder();
+        try (RandomAccessFile reader = new RandomAccessFile(this.stderrFile, "r")) {
+            long length = this.stderrFile.length();
+            long pos = length - 1;
+            int count = 0;
+            StringBuilder sbLine = new StringBuilder();
+            StringBuilder sbLogs = new StringBuilder();
 
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                stringBuilder.append(line).append("\n");
+            while (pos >= 0 && count < LOG_LINES) {
+                reader.seek(pos);
+                char c = (char) reader.readByte();
+
+                if (c == '\n') {
+                    sbLogs.append(sbLine).append('\n');
+                    sbLine.setLength(0);
+                    count++;
+                } else {
+                    sbLine.append(c);
+                }
+                pos--;
             }
-            scanner.close();
-            return stringBuilder.toString();
-        } catch (FileNotFoundException e) {
-            return "";
+
+            if (sbLine.length() > 0) {
+                sbLogs.append(sbLine);
+            }
+            return sbLogs.reverse().toString();
+        } catch (IOException ignored) {
         }
+        return null;
     }
 
     public void changeNbInstance(int nbInstance, JNAService jnaService) {
@@ -103,8 +134,13 @@ public class GroupProcess {
         while (this.processes.size() < nbInstance) {
             Process p = new Process(this.configuration, jnaService);
             this.processes.add(p);
-            if (this.configuration.isStartAtLaunch())
-                p.start();
+            if (this.configuration.isStartAtLaunch()) {
+                try {
+                    p.start();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
 
     }
@@ -114,10 +150,19 @@ public class GroupProcess {
     }
 
     public void restartOutputThread() {
+        try {
+            this.stdoutFile = this.createLogFile(this.configuration.getStdoutFile());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         this.processes.forEach(process -> process.getMainRunnable().restartOutputThread());
     }
 
     public void restartErrThread() {
-        this.processes.forEach(process -> process.getMainRunnable().restartErrThread());
+        try {
+            this.stderrFile = this.createLogFile(this.configuration.getStderrFile());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }        this.processes.forEach(process -> process.getMainRunnable().restartErrThread());
     }
 }
